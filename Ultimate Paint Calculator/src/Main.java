@@ -508,8 +508,8 @@ public class Main {
                     for(String x : colors){
                         totalPrice.set(colors.indexOf(x), totalPaint.get(colors.indexOf(x)) * price.get(colors.indexOf(x)));
                         System.out.println("\nFor paint in color: " + x);
-                        System.out.println("Paint needed: " + totalPaint.get(colors.indexOf(x)) + "L");
-                        System.out.println("Cost: £" + totalPrice.get(colors.indexOf(x)));
+                        System.out.printf("\nPaint needed: %,.2fL", totalPaint.get(colors.indexOf(x)));
+                        System.out.printf("\nCost: £%,.2f", totalPrice.get(colors.indexOf(x)));
                     }
                     break;
                 case "7": //help
@@ -520,7 +520,7 @@ public class Main {
                     System.out.println("'White' is the same as 'white' or 'WhITe'");
                     System.out.println("You can remove a wall which contains not printable area.");
                     System.out.println("Non printable areas will stick to the empty wall,");
-                    System.out.println("so remember to add a new wall after removing one");
+                    System.out.println("so remember to add a new wall after removing one.");
                     break;
                 case "8": //quit
                     run = false;
