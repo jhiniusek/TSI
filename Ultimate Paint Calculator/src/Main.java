@@ -9,12 +9,17 @@ public class Main {
         Scanner reader = new Scanner(System.in);
         String input = " ";
 
+        int negativeCheck;
         int numberOfWalls = 0;
         int savedWalls = 0;
         while (numberOfWalls == 0) {
             input = reader.next();
             try{
-                numberOfWalls = Integer.parseInt(input);
+                negativeCheck = Integer.parseInt(input);
+                if (negativeCheck < 0) {
+                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                }
+                numberOfWalls = Math.abs(Integer.parseInt(input));
             }
             catch (Exception e) {
                 System.out.println("Incorrect number of walls! Try again!");
@@ -39,7 +44,11 @@ public class Main {
         while (numberOfWindows == null) {
             input = reader.next();
             try{
-                numberOfWindows = Integer.parseInt(input);
+                negativeCheck = Integer.parseInt(input);
+                if (negativeCheck < 0) {
+                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                }
+                numberOfWindows = Math.abs(Integer.parseInt(input));
             }
             catch (Exception e) {
                 System.out.println("Incorrect number of not paintable areas! Try again!");
@@ -88,7 +97,10 @@ public class Main {
                             System.out.println("What is the base measurement? (in meters)");
                             try {
                                 double base = Double.valueOf(reader.next());
-                                listOfWalls.get(bufferindex).base = base;
+                                if(base<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWalls.get(bufferindex).base = Math.abs(base);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -106,7 +118,10 @@ public class Main {
                             System.out.println("What is the base measurement? (in meters)");
                             try {
                                 double base = Double.valueOf(reader.next());
-                                listOfWalls.get(bufferindex).base = base;
+                                if(base<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWalls.get(bufferindex).base = Math.abs(base);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -116,7 +131,10 @@ public class Main {
                             System.out.println("What is the height measurement? (in meters)");
                             try {
                                 double height = Double.valueOf(reader.next());
-                                listOfWalls.get(bufferindex).height = height;
+                                if(height<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWalls.get(bufferindex).height = Math.abs(height);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -134,7 +152,10 @@ public class Main {
                             System.out.println("What is the base measurement? (in meters)");
                             try {
                                 double base = Double.valueOf(reader.next());
-                                listOfWalls.get(bufferindex).base = base;
+                                if(base<0){
+                                    System.out.println("Warning! Negative number detected, removed minus sign.");
+                                }
+                                listOfWalls.get(bufferindex).base = Math.abs(base);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -144,7 +165,10 @@ public class Main {
                             System.out.println("What is the height measurement? (in meters)");
                             try {
                                 double height = Double.valueOf(reader.next());
-                                listOfWalls.get(bufferindex).height = height;
+                                if(height<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWalls.get(bufferindex).height = Math.abs(height);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -161,7 +185,10 @@ public class Main {
                             System.out.println("What is the base 1 measurement? (in meters)");
                             try {
                                 double base = Double.valueOf(reader.next());
-                                listOfWalls.get(bufferindex).base = base;
+                                if(base<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWalls.get(bufferindex).base = Math.abs(base);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -171,7 +198,10 @@ public class Main {
                             System.out.println("What is the base 2 measurement? (in meters)");
                             try {
                                 double base2 = Double.valueOf(reader.next());
-                                listOfWalls.get(bufferindex).base2 = base2;
+                                if(base2<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWalls.get(bufferindex).base2 = Math.abs(base2);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -181,7 +211,10 @@ public class Main {
                             System.out.println("What is the height measurement (in meters)?");
                             try {
                                 double height = Double.valueOf(reader.next());
-                                listOfWalls.get(bufferindex).height = height;
+                                if(height<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWalls.get(bufferindex).height = Math.abs(height);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -198,7 +231,10 @@ public class Main {
                             System.out.println("What is the radius measurement (in meters)?");
                             try {
                                 double base = Double.valueOf(reader.next());
-                                listOfWalls.get(bufferindex).base = base;
+                                if(base<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWalls.get(bufferindex).base = Math.abs(base);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -272,7 +308,10 @@ public class Main {
                             System.out.println("What is the base measurement? (in meters)");
                             try {
                                 double base = Double.valueOf(reader.next());
-                                listOfWindows.get(bufferindex).base = base;
+                                if(base<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWindows.get(bufferindex).base = Math.abs(base);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -288,7 +327,10 @@ public class Main {
                             System.out.println("What is the base measurement? (in meters)");
                             try {
                                 double base = Double.valueOf(reader.next());
-                                listOfWindows.get(bufferindex).base = base;
+                                if(base<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWindows.get(bufferindex).base = Math.abs(base);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -298,7 +340,10 @@ public class Main {
                             System.out.println("What is the height measurement? (in meters)");
                             try {
                                 double height = Double.valueOf(reader.next());
-                                listOfWindows.get(bufferindex).height = height;
+                                if(height<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWindows.get(bufferindex).height = Math.abs(height);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -314,7 +359,10 @@ public class Main {
                             System.out.println("What is the base measurement? (in meters)");
                             try {
                                 double base = Double.valueOf(reader.next());
-                                listOfWindows.get(bufferindex).base = base;
+                                if(base<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWindows.get(bufferindex).base = Math.abs(base);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -324,7 +372,10 @@ public class Main {
                             System.out.println("What is the height measurement? (in meters)");
                             try {
                                 double height = Double.valueOf(reader.next());
-                                listOfWindows.get(bufferindex).height = height;
+                                if(height<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWindows.get(bufferindex).height = Math.abs(height);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -339,7 +390,10 @@ public class Main {
                             System.out.println("What is the base 1 measurement? (in meters)");
                             try {
                                 double base = Double.valueOf(reader.next());
-                                listOfWindows.get(bufferindex).base = base;
+                                if(base<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWindows.get(bufferindex).base = Math.abs(base);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -349,7 +403,10 @@ public class Main {
                             System.out.println("What is the base 2 measurement? (in meters)");
                             try {
                                 double base2 = Double.valueOf(reader.next());
-                                listOfWindows.get(bufferindex).base2 = base2;
+                                if(base2<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWindows.get(bufferindex).base2 = Math.abs(base2);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -359,7 +416,10 @@ public class Main {
                             System.out.println("What is the height measurement (in meters)?");
                             try {
                                 double height = Double.valueOf(reader.next());
-                                listOfWindows.get(bufferindex).height = height;
+                                if(height<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWindows.get(bufferindex).height = Math.abs(height);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -374,7 +434,10 @@ public class Main {
                             System.out.println("What is the radius measurement (in meters)?");
                             try {
                                 double base = Double.valueOf(reader.next());
-                                listOfWindows.get(bufferindex).base = base;
+                                if(base<0){
+                                    System.out.println("Warning! Negative number detected, removed the minus sign.");
+                                }
+                                listOfWindows.get(bufferindex).base = Math.abs(base);
                             }
                             catch (Exception e){
                                 System.out.println("Incorrect measurement! Try again!");
@@ -439,7 +502,7 @@ public class Main {
                             System.out.println("Wall nr: " + (listOfWalls.indexOf(i) + 1) + "\tShape: " + i.getShape() + "\tMeasurements: " + i.getMeasurements() + "\tColor: " + i.getColor());
                             for(Shape z: listOfWindows) {
                                 if(z.value != 0 && z.wallIndex == listOfWalls.indexOf(i)){
-                                    System.out.println("\tNon printable area nr: " + (listOfWindows.indexOf(z) + 1) + "\tShape: " + z.getShape() + "\tMeasurements: " + z.getMeasurements() + "\tWall: " + z.wallIndex);
+                                    System.out.println("\tNon printable area nr: " + (listOfWindows.indexOf(z) + 1) + "\tShape: " + z.getShape() + "\tMeasurements: " + z.getMeasurements());
                                 }
                             }
                         }
@@ -447,7 +510,7 @@ public class Main {
                             System.out.println("Empty Wall Slot");
                             for(Shape z: listOfWindows) {
                                 if(z.value != 0 && z.wallIndex == listOfWalls.indexOf(i)){
-                                    System.out.println("\tNon printable area nr: " + (listOfWindows.indexOf(z) + 1) + "\tShape: " + z.getShape() + "\tMeasurements: " + z.getMeasurements() + "\tWall: " + z.wallIndex);
+                                    System.out.println("\tNon printable area nr: " + (listOfWindows.indexOf(z) + 1) + "\tShape: " + z.getShape() + "\tMeasurements: " + z.getMeasurements());
                                 }
                             }
                         }
@@ -521,12 +584,14 @@ public class Main {
                     System.out.println("You can remove a wall which contains not printable area.");
                     System.out.println("Non printable areas will stick to the empty wall,");
                     System.out.println("so remember to add a new wall after removing one.");
+                    System.out.println("If you want to change number of walls or non printable areas");
+                    System.out.println("restart the program.");
                     break;
                 case "8": //quit
                     run = false;
                     break;
                 default:
-                    System.out.println("Incorrect input, try again!");
+                    System.out.println("Incorrect input! Try again!");
             }
 
         }
