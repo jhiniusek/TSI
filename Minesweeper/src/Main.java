@@ -10,42 +10,60 @@ public class Main {
         AsciGUI gui = new AsciGUI();
         InputValidation check = new InputValidation();
         GameLogic game = new GameLogic();
+        int width;
+        int height;
+        int bombs;
         gui.printMainMenu();
         Scanner reader = new Scanner(System.in);
         int input;
         boolean run = true;
+        boolean play = false;
         while(run){
             input = check.checkInt(reader.next());
             switch(input){
                 case 1: { //play
-                    boolean play = true;
+                    boolean level = true;
                     gui.printLevels();
-                    while(play){
+                    while(level){
                         input = check.checkInt(reader.next());
                         switch(input) {
                             case 1:{
-                                int width = 9; //x
-                                int height = 9; //y
-                                int bombs = 10;
-                                game.startGame(width,height,bombs);
+                                width = 9; //x
+                                height = 9; //y
+                                bombs = 10;
+                                Map map = game.startGame(width,height,bombs);
+                                play = true;
+                                level = false;
                                 break;
                             }
                             case 2:{
-                                int width = 16; //x
-                                int height = 16; //y
-                                int bombs = 40;
-                                game.startGame(width,height,bombs);
+                                width = 16; //x
+                                height = 16; //y
+                                bombs = 40;
+                                Map map = game.startGame(width,height,bombs);
+                                play = true;
+                                level = false;
                                 break;
                             }
                             case 3:{
-                                int width = 30; //x
-                                int height = 16; //y
-                                int bombs = 99;
-                                game.startGame(width,height,bombs);
+                                width = 30; //x
+                                height = 16; //y
+                                bombs = 99;
+                                Map map = game.startGame(width,height,bombs);
+                                play = true;
+                                level = false;
                                 break;
                             }
                             case 4:{
-                                System.out.println("wip");
+                                System.out.print("How many colums? (minimum 5)");
+                                width = check.checkInt(reader.next());
+                                System.out.print("How many rows? (minimum 5)");
+                                height = check.checkInt(reader.next());
+                                System.out.println("How many bombs?");
+                                bombs = check.checkInt(reader.next());
+                                Map map = game.startCustomGame(width,height,bombs);
+                                play = map.isPlayabe();
+                                level = false;
                                 break;
                             }
                             default:{
@@ -54,6 +72,16 @@ public class Main {
                             }
                         }
                     }
+                    while(play){
+                        System.out.print("Enter a column digit: ");
+
+                        System.out.print("Enter a row digit: ");
+
+                        gui.printCellOptions();
+                        reader.next();
+                        play = false;
+                    }
+                    gui.printMainMenu();
                     break;
                 }
                 case 2: { //howToPlay
@@ -71,13 +99,7 @@ public class Main {
             }
         }
 
-        /*int width = 10; //x
-        int height = 10; //y
-        int bombs = 10;
-        Map game = new Map();
-        game.generateMap(width, height);
-        game.printMap();
-        Cell activeCell = game.chooseCell(3,3);
+        /*Cell activeCell = game.chooseCell(3,3);
         game.spawnBombs(bombs, activeCell);
         game.spawnNumbers();
         System.out.println("\n");

@@ -2,7 +2,7 @@ public class Cell {
     private int x = 0;      //position
     private int y = 0;
     private String graphic = "[ ]";
-    private int status = 0; //1 - Number  2 - Flag  3 - Bomb  4 - Flagged Bomb
+    private int status = 0; //1 - Number  2 - Incorrect Flag  3 - Bomb  4 - Flagged Bomb
     private int value = 0;  //how many bombs neighbouring
     private boolean isCovered = true;
 

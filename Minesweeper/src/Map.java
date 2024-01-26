@@ -6,6 +6,14 @@ public class Map {
     private int width;
     private int height;
     private int bombs;
+    private boolean isPlayabe = true;
+
+    public boolean isPlayabe() {
+        return isPlayabe;
+    }
+    public void setPlayabe(boolean playabe) {
+        isPlayabe = playabe;
+    }
 
     public void generateMap(int width, int height){
         this.width = width;
@@ -84,7 +92,7 @@ public class Map {
                 }
             }
             if(guess.getStatus()==2||guess.getStatus()==4){
-                System.out.println("Cannot discover the flag!");
+                System.out.println("Cannot reveal flagged cell!");
             }
             if(guess.getStatus()==3){
                 guess.discoverCell();
@@ -93,8 +101,28 @@ public class Map {
         }
     }
 
-    public void flagCell(Cell x){
-
+    public void flagCell(Cell x){           //NOT TESTED YET
+        if(x.getIsCovered()){
+            if(x.getStatus()==1){
+                x.setStatus(2);
+                bombs--;
+            }
+            if(x.getStatus()==3){
+                x.setStatus(4);
+                bombs--;
+            }
+            if(x.getStatus()==2){
+                x.setStatus(1);
+                bombs++;
+            }
+            if(x.getStatus()==4){
+                x.setStatus(3);
+                bombs++;
+            }
+        }
+        else{
+            System.out.println("You cannot flag revealed cell!");
+        }
     }
 
     public void spawnNumbers(){
