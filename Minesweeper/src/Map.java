@@ -3,14 +3,21 @@ import java.util.ArrayList;
 
 public class Map {
     private ArrayList<Cell> map = new ArrayList<Cell>();
+    private ArrayList<Cell> toDecideFate = new ArrayList<Cell>();
     private int width;
     private int height;
     private int bombs;
+    private int flagCounter;
     private boolean isPlayabe = true;
 
     public boolean isPlayabe() {
         return isPlayabe;
     }
+
+    public int getFlagCounter() {
+        return flagCounter;
+    }
+
     public void setPlayabe(boolean playabe) {
         isPlayabe = playabe;
     }
@@ -22,6 +29,7 @@ public class Map {
             for(int y = 0; y < width; y++){
                 Cell newCell = new Cell(x+1, y+1);
                 map.add(newCell);
+                toDecideFate.add(newCell);
             }
         }
     }
@@ -81,7 +89,6 @@ public class Map {
 
     public void guess(Cell guess){
         if(!guess.getIsCovered()){
-            System.out.println("You've already revealed this cell.");
         }
         else{
             if(guess.getStatus()==1){
@@ -96,28 +103,33 @@ public class Map {
             }
             if(guess.getStatus()==3){
                 guess.discoverCell();
-                System.out.println("You lost!");
             }
         }
     }
 
-    public void flagCell(Cell x){           //NOT TESTED YET
+    public void flagCell(Cell x){
         if(x.getIsCovered()){
-            if(x.getStatus()==1){
-                x.setStatus(2);
-                bombs--;
-            }
-            if(x.getStatus()==3){
-                x.setStatus(4);
-                bombs--;
-            }
-            if(x.getStatus()==2){
-                x.setStatus(1);
-                bombs++;
-            }
-            if(x.getStatus()==4){
-                x.setStatus(3);
-                bombs++;
+            switch(x.getStatus()){
+                case 1:{
+                    x.setStatus(2);
+                    flagCounter--;
+                    break;
+                }
+                case 2:{
+                    x.setStatus(1);
+                    flagCounter--;
+                    break;
+                }
+                case 3:{
+                    x.setStatus(4);
+                    flagCounter--;
+                    break;
+                }
+                case 4:{
+                    x.setStatus(3);
+                    flagCounter--;
+                    break;
+                }
             }
         }
         else{
@@ -144,18 +156,39 @@ public class Map {
 
     public void spawnBombs(int bombs, Cell start){
         this.bombs = bombs;
-        while(bombs > 0){
-            int x =(int)((Math.random()*this.width)+1);
-            int y =(int)((Math.random()*this.height)+1);
-            Cell newBomb = chooseCell(x,y);
-            if(start == newBomb || newBomb.getStatus() == 3){}
-            else{
-                newBomb.setStatus(3);
-                bombs--;
-            }
+        this.flagCounter = bombs;
+        toDecideFate.remove(start);
+        for(int i = 0; i < bombs; i++) {
+            int bomb = (int) (Math.random() * toDecideFate.size());
+            Cell newBomb = toDecideFate.get(bomb);
+            newBomb.setStatus(3);
+            toDecideFate.remove(newBomb);
         }
         spawnNumbers();
         guess(start);
+    }
+
+    public int checkWin(){
+        int checker = 0;
+        for(Cell x : map){
+            if(x.getStatus() == 1 && x.getIsCovered() == false){
+                checker++;
+            }
+        }
+        if(checker == width*height - bombs){
+            for(Cell x : map){
+                if(x.getStatus()==3){
+                    flagCell(x);
+                }
+            }
+            return 1;
+        }
+        for(Cell x : map){
+            if(x.getStatus() == 3 && x.getIsCovered() == false){
+                return 2;
+            }
+        }
+        return 0;
     }
 
     public void debugCell(int x, int y){

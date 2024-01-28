@@ -8,9 +8,18 @@ public class GameLogic {
         return game;
     }
 
+    public int checkInt(String input){
+        try{
+            int i = Integer.parseInt(input);
+            return i;
+        }
+        catch (Exception e){
+        }
+        return 0;
+    }
     public Map startCustomGame(int width, int height, int bombs){
-        if(width >= 5 && height >= 5){
-            if(bombs > 0 && bombs <= (width*height)-15){
+        if(width >= 5 && height >= 5 && width <= 80 && height <= 80){
+            if(bombs > 0 && bombs <= (width*height)-1){
                 Map game = new Map();
                 game.generateMap(width, height);
                 game.printMap();
@@ -18,8 +27,8 @@ public class GameLogic {
             }
             else {
                 System.out.println("Incorrect number of bombs.");
-                System.out.println("Make sure there are atleast 1 bomb");
-                System.out.println("and atleast 15 safe cells.");
+                System.out.println("Make sure there are at least 1 bomb");
+                System.out.println("and at least 1 safe cell.");
             }
         }
         else {
@@ -28,5 +37,9 @@ public class GameLogic {
         Map game = new Map();
         game.setPlayabe(false);
         return game;
+    }
+
+    public void user(){
+
     }
 }

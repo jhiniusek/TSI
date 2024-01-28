@@ -44,7 +44,14 @@ public class Cell {
 
     public String display(){
         if(isCovered){
-            return graphic;
+            if(status==2||status==4) {
+                graphic = "\033[32m[F]\033[0m";
+                return graphic;
+            }
+            else{
+                graphic = "[ ]";
+                return graphic;
+            }
         }
         else{
             switch(status){
@@ -52,15 +59,12 @@ public class Cell {
                     graphic = "[" + value + "]";
                     return graphic;
                 }
-                case 2,4: {
-                    graphic = "[F]";
-                    return graphic;
-                }
                 case 3: {
-                    graphic = "[*]";
+                    graphic = "\033[31m[*]\033[0m";
                     return graphic;
                 }
                 default: {
+                    graphic = "[ ]";
                     return graphic;  //DEBUG NARAZIE
                 }
             }

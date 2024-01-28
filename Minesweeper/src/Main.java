@@ -5,33 +5,36 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
         System.out.println("Welcome to Minesweeper!");
         AsciGUI gui = new AsciGUI();
-        InputValidation check = new InputValidation();
         GameLogic game = new GameLogic();
-        int width;
-        int height;
-        int bombs;
+        Map map = new Map();
+        int width=0;
+        int height=0;
+        int bombs=0;
+        int win=0;
+        int x;
+        int y;
         gui.printMainMenu();
         Scanner reader = new Scanner(System.in);
         int input;
         boolean run = true;
         boolean play = false;
         while(run){
-            input = check.checkInt(reader.next());
+            input = game.checkInt(reader.next());
             switch(input){
                 case 1: { //play
-                    boolean level = true;
                     gui.printLevels();
+                    boolean level = true;
+                    boolean firstMove = true;
                     while(level){
-                        input = check.checkInt(reader.next());
+                        input = game.checkInt(reader.next());
                         switch(input) {
                             case 1:{
                                 width = 9; //x
                                 height = 9; //y
                                 bombs = 10;
-                                Map map = game.startGame(width,height,bombs);
+                                map = game.startGame(width,height,bombs);
                                 play = true;
                                 level = false;
                                 break;
@@ -40,7 +43,7 @@ public class Main {
                                 width = 16; //x
                                 height = 16; //y
                                 bombs = 40;
-                                Map map = game.startGame(width,height,bombs);
+                                map = game.startGame(width,height,bombs);
                                 play = true;
                                 level = false;
                                 break;
@@ -49,19 +52,21 @@ public class Main {
                                 width = 30; //x
                                 height = 16; //y
                                 bombs = 99;
-                                Map map = game.startGame(width,height,bombs);
+                                map = game.startGame(width,height,bombs);
                                 play = true;
                                 level = false;
                                 break;
                             }
                             case 4:{
-                                System.out.print("How many colums? (minimum 5)");
-                                width = check.checkInt(reader.next());
-                                System.out.print("How many rows? (minimum 5)");
-                                height = check.checkInt(reader.next());
+
+                                System.out.print("How many colums? (min 5;max 80)");
+                                width = game.checkInt(reader.next());
+                                System.out.print("How many rows? (min 5;max 80)");
+                                height = game.checkInt(reader.next());
                                 System.out.println("How many bombs?");
-                                bombs = check.checkInt(reader.next());
-                                Map map = game.startCustomGame(width,height,bombs);
+                                bombs = game.checkInt(reader.next());
+                                map = game.startCustomGame(width,height,bombs);
+                                firstMove = map.isPlayabe();
                                 play = map.isPlayabe();
                                 level = false;
                                 break;
@@ -72,14 +77,94 @@ public class Main {
                             }
                         }
                     }
+                    while(firstMove){
+                        System.out.print("Enter a column number: ");
+                        x = game.checkInt(reader.next());
+                        System.out.print("Enter a row number: ");
+                        y = game.checkInt(reader.next());
+                        if(x>0&&y>0&&x<=width&&y<=height){
+                            Cell userCell = map.chooseCell(x,y);
+                            map.spawnBombs(bombs,userCell);
+                            System.out.println("BOMBS LEFT: " + map.getFlagCounter());
+                            map.printMap();
+                            win = map.checkWin();
+                            switch (win) {
+                                case 1: {
+                                    System.out.println();
+                                    map.printMap();
+                                    System.out.println("You won!");
+                                    play = false;
+                                    break;
+                                }
+                                case 2: {
+                                    System.out.println("You lost!");
+                                    play = false;
+                                    break;
+                                }
+                                default: {
+                                    break;
+                                }
+                            }
+                            firstMove = false;
+                        }
+                        else{
+                            System.out.println("Incorrect cell coordinates.");
+                        }
+
+                    }
                     while(play){
-                        System.out.print("Enter a column digit: ");
-
-                        System.out.print("Enter a row digit: ");
-
-                        gui.printCellOptions();
-                        reader.next();
-                        play = false;
+                        System.out.print("Enter a column number: ");
+                        x = game.checkInt(reader.next());
+                        System.out.print("Enter a row number: ");
+                        y = game.checkInt(reader.next());
+                        if(x>0&&y>0&&x<=width&&y<=height){
+                            Cell userCell = map.chooseCell(x,y);
+                            gui.printCellOptions();
+                            input = game.checkInt(reader.next());
+                            switch (input){
+                                case 1: {
+                                    map.guess(userCell);
+                                    System.out.println("BOMBS LEFT: " + map.getFlagCounter());
+                                    map.printMap();
+                                    win = map.checkWin();
+                                    switch (win){
+                                        case 1:{
+                                            System.out.println();
+                                            map.printMap();
+                                            System.out.println("You won!");
+                                            play = false;
+                                            break;
+                                        }
+                                        case 2:{
+                                            System.out.println("You lost!");
+                                            play = false;
+                                            break;
+                                        }
+                                        default:{
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 2: {
+                                    map.flagCell(userCell);
+                                    System.out.println("BOMBS LEFT: " + map.getFlagCounter());
+                                    map.printMap();
+                                    break;
+                                }
+                                case 3: {
+                                    break;
+                                }
+                                default: {
+                                    System.out.println("Incorrect input.");
+                                    break;
+                                }
+                            }
+                        }
+                        else{
+                            System.out.println("Incorrect cell coordinates.");
+                        }
+                        //play = false;
                     }
                     gui.printMainMenu();
                     break;
@@ -99,13 +184,25 @@ public class Main {
             }
         }
 
-        /*Cell activeCell = game.chooseCell(3,3);
+        //TEST//
+        /*int width = 30;
+        int height = 30;
+        int bombs = 80;
+
+        Map game = new Map();
+        game.generateMap(width, height);
+        game.printMap();
+        Cell activeCell = game.chooseCell(3,3);
         game.spawnBombs(bombs, activeCell);
         game.spawnNumbers();
         System.out.println("\n");
         game.printMap();
         game.guess(game.chooseCell(3,4));
         System.out.println("\n");
+        game.printMap();
+        game.debugDiscoverAll();
+        System.out.println("\n");
         game.printMap();*/
+
     }
 }
