@@ -35,11 +35,7 @@ public class GameLogic {
             System.out.println("Incorrect number of rows and columns.");
         }
         Map game = new Map();
-        game.setPlayabe(false);
+        game.setPlayable(false);
         return game;
-    }
-
-    public void user(){
-
     }
 }

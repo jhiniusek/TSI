@@ -8,18 +8,18 @@ public class Map {
     private int height;
     private int bombs;
     private int flagCounter;
-    private boolean isPlayabe = true;
+    private boolean isPlayable = true;
 
-    public boolean isPlayabe() {
-        return isPlayabe;
+    public boolean isPlayable() {
+        return isPlayable;
     }
 
     public int getFlagCounter() {
         return flagCounter;
     }
 
-    public void setPlayabe(boolean playabe) {
-        isPlayabe = playabe;
+    public void setPlayable(boolean playable) {
+        isPlayable = playable;
     }
 
     public void generateMap(int width, int height){

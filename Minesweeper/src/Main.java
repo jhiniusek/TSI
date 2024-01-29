@@ -63,11 +63,11 @@ public class Main {
                                 width = game.checkInt(reader.next());
                                 System.out.print("How many rows? (min 5;max 80)");
                                 height = game.checkInt(reader.next());
-                                System.out.println("How many bombs?");
+                                System.out.print("How many bombs?");
                                 bombs = game.checkInt(reader.next());
                                 map = game.startCustomGame(width,height,bombs);
-                                firstMove = map.isPlayabe();
-                                play = map.isPlayabe();
+                                firstMove = map.isPlayable();
+                                play = map.isPlayable();
                                 level = false;
                                 break;
                             }
@@ -110,7 +110,6 @@ public class Main {
                         else{
                             System.out.println("Incorrect cell coordinates.");
                         }
-
                     }
                     while(play){
                         System.out.print("Enter a column number: ");
@@ -183,26 +182,5 @@ public class Main {
                 }
             }
         }
-
-        //TEST//
-        /*int width = 30;
-        int height = 30;
-        int bombs = 80;
-
-        Map game = new Map();
-        game.generateMap(width, height);
-        game.printMap();
-        Cell activeCell = game.chooseCell(3,3);
-        game.spawnBombs(bombs, activeCell);
-        game.spawnNumbers();
-        System.out.println("\n");
-        game.printMap();
-        game.guess(game.chooseCell(3,4));
-        System.out.println("\n");
-        game.printMap();
-        game.debugDiscoverAll();
-        System.out.println("\n");
-        game.printMap();*/
-
     }
 }
