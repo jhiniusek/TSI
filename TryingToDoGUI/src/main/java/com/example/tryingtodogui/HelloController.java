@@ -6,19 +6,23 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-
 import java.util.ArrayList;
 
 public class HelloController {
     @FXML
-    private Label welcomeText;
+    private Label resultLabel;
+    @FXML
+    private Label info;
     @FXML
     private GridPane map;
+    @FXML
+    private Button flagButton;
     private ArrayList<Cell> cells = new ArrayList<Cell>();
     private ArrayList<Cell> toDecideFate = new ArrayList<Cell>();
     private int width = 9;
     private int height = 9;
     private int bombs = 10;
+    private boolean flagging = false;
 
     @FXML
     protected void onStartButtonClick() {
@@ -58,19 +62,31 @@ public class HelloController {
             newBomb.getButton().setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    newBomb.getButton().setText("*");
+                    if(flagging){
+                        if(newBomb.getButton().getText() == "F"){
+                            newBomb.getButton().setText("  ");
+                        }
+                        else {
+                            newBomb.getButton().setText("F");
+                            newBomb.getButton().setStyle("-fx-text-fill: green");
+                        }
+                    }
+                    else{
+                        if(newBomb.getButton().getText() == "F"){ }
+                        else{
+                            newBomb.getButton().setText("*");
+                            newBomb.getButton().setStyle("-fx-text-fill: red");
+                            resultLabel.setText("YOU LOST!");
+                        }
+                    }
                 }
             });
             toDecideFate.remove(newBomb);
         }
+        toDecideFate.add(start);
         for(Cell x : toDecideFate){
             x.setStatus(1);
-            x.getButton().setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    x.getButton().setText(String.valueOf(x.getValue()));
-                }
-            });
+
         }
         for(Cell number : cells){
             if(number.getStatus()==1){
@@ -81,8 +97,68 @@ public class HelloController {
                     }
                 }
                 number.setValue(bombcounter);
+                number.getButton().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+
+                        if(flagging){
+                            if(number.getButton().getText() == "F"){
+                                number.getButton().setText("  ");
+                            }
+                            else {
+                                number.getButton().setText("F");
+                                number.getButton().setStyle("-fx-text-fill: green");
+                            }
+                        }
+                        else{
+                            if(number.getButton().getText() == "F"){ }
+                            else {
+                                number.getButton().setStyle("-fx-text-fill: black");
+                                number.getButton().setText(String.valueOf(number.getValue()));
+                                if (number.getValue() == 0) {
+                                    ArrayList<Cell> neighbours = getNeighbours(number);
+                                }
+                                checkWin();
+                            }
+                        }
+                    }
+                });
             }
         }
         start.getButton().setText(String.valueOf(start.getValue()));
+    }
+    public ArrayList<Cell> getNeighbours(Cell clicked){
+        ArrayList<Cell> neighbours = new ArrayList<Cell>();
+        for(Cell check : cells){
+            if((clicked.getX()==check.getX()-1 || clicked.getX()==check.getX() ||  clicked.getX()==check.getX()+1) && (clicked.getY()==check.getY()-1 || clicked.getY()==check.getY() || clicked.getY()==check.getY()+1)){
+                check.getButton().setText(String.valueOf(check.getValue()));
+                neighbours.add(check);
+            }
+        }
+        return neighbours;
+    }
+
+    public void checkWin(){
+        int counter = 0;
+        for(Cell x : toDecideFate){
+            if(x.getButton().getText()!="  "){
+                counter++;
+            }
+        }
+        if(counter == width*height - bombs){
+            resultLabel.setText("YOU WON!");
+        }
+    }
+
+    @FXML
+    protected void flagger(){
+        if(flagging){
+            flagging = false;
+            info.setText("Status: Guessing");
+        }
+        else{
+            flagging = true;
+            info.setText("Status: Flagging");
+        }
     }
 }

@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.event.MouseEvent;
 
 public class GameLogic {
     public Map startGame(int width, int height, int bombs){
