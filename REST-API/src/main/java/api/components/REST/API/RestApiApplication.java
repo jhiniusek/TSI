@@ -1,18 +1,11 @@
 package api.components.REST.API;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.ResourceAccessException;
-
 import java.util.*;
 
 @SpringBootApplication
@@ -27,13 +20,19 @@ public class RestApiApplication {
 	private CountryRepository countryRepo;
 	private CityRepository cityRepo;
 	private AddressRepository addressRepo;
+	private StaffRepository staffRepo;
+	private StoreRepository storeRepo;
 
-	public RestApiApplication(ActorRepository actorRepo, FilmRepository filmRepo, CountryRepository countryRepo, CityRepository cityRepo, AddressRepository addressRepo){
+	public RestApiApplication(ActorRepository actorRepo, FilmRepository filmRepo, CountryRepository countryRepo,
+							  CityRepository cityRepo, AddressRepository addressRepo, StaffRepository staffRepo,
+							  StoreRepository storeRepo){
 		this.actorRepo = actorRepo;
 		this.filmRepo = filmRepo;
 		this.countryRepo = countryRepo;
 		this.cityRepo = cityRepo;
 		this.addressRepo = addressRepo;
+		this.staffRepo = staffRepo;
+		this.storeRepo = storeRepo;
 	}
 
 	//GETTING RECORDS FROM TABLES
@@ -102,7 +101,6 @@ public class RestApiApplication {
 	public Iterable<Country> getAllCountries() {
 		return countryRepo.findAll();
 	}
-
 	@GetMapping("allCities")
 	public Iterable<City> getAllCities() {
 		return cityRepo.findAll();
@@ -110,6 +108,27 @@ public class RestApiApplication {
 	@GetMapping("allAddresses")
 	public Iterable<Address> getAllAddresses() {
 		return addressRepo.findAll();
+	}
+
+	@GetMapping("allStaff")
+	public List<String> getAllStaff() throws JsonProcessingException {
+		List<Staff> objectStaff = staffRepo.findAll();
+		List<String> staffList = new ArrayList<String>();
+
+		for(Staff staff : objectStaff){
+			staffList.add(new ObjectMapper().writerWithView(JsonViews.Staff.class).writeValueAsString(staff));
+		}
+		return staffList;
+	}
+	@GetMapping("allStores")
+	public List<String> getAllStores() throws JsonProcessingException {
+		List<Store> objectStores = storeRepo.findAll();
+		List<String> stores = new ArrayList<String>();
+
+		for(Store store : objectStores){
+			stores.add(new ObjectMapper().writerWithView(JsonViews.Film.class).writeValueAsString(store));
+		}
+		return stores;
 	}
 
 	// EDIT ACTORS
