@@ -1,8 +1,7 @@
-package api.components.REST.API;
+package api.components.REST.API.City;
 
+import api.components.REST.API.Country.Country;
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="city")

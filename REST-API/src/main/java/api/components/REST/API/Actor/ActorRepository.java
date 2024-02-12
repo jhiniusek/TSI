@@ -1,4 +1,4 @@
-package api.components.REST.API;
+package api.components.REST.API.Actor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ActorRepository extends JpaRepository<Actor,Integer>{

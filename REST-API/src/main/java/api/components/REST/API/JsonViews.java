@@ -5,6 +5,8 @@ public class JsonViews
 
     public static class Film {}
 
+    public static class Category{}
+
     public static class Staff {}
 
     public static class Store {}

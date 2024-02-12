@@ -1,4 +1,4 @@
-package api.components.REST.API;
+package api.components.REST.API.Staff;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

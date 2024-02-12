@@ -1,9 +1,10 @@
-package api.components.REST.API;
+package api.components.REST.API.Staff;
 
+import api.components.REST.API.Address.Address;
+import api.components.REST.API.JsonViews;
+import api.components.REST.API.Store.Store;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
-
-import java.security.PrivateKey;
 
 @Entity
 @Table(name="staff")

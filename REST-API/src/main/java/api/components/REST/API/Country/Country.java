@@ -1,10 +1,10 @@
-package api.components.REST.API;
+package api.components.REST.API.Country;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="country")
- class Country {
+ public class Country {
 
     @Id
     @Column(name="country_id",unique = true)

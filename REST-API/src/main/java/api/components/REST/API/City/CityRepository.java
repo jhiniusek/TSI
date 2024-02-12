@@ -1,4 +1,4 @@
-package api.components.REST.API;
+package api.components.REST.API.City;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

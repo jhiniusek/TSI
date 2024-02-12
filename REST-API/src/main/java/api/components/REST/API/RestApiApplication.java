@@ -1,4 +1,24 @@
 package api.components.REST.API;
+import api.components.REST.API.Actor.Actor;
+import api.components.REST.API.Actor.ActorRepository;
+import api.components.REST.API.Address.Address;
+import api.components.REST.API.Address.AddressRepository;
+import api.components.REST.API.Category.Category;
+import api.components.REST.API.Category.CategoryRepository;
+import api.components.REST.API.City.City;
+import api.components.REST.API.City.CityRepository;
+import api.components.REST.API.Country.Country;
+import api.components.REST.API.Country.CountryRepository;
+import api.components.REST.API.Film.Film;
+import api.components.REST.API.Film.FilmRepository;
+import api.components.REST.API.Relationships.Film_Actor;
+import api.components.REST.API.Relationships.Film_ActorRepository;
+import api.components.REST.API.Relationships.Film_CategoryRepository;
+import api.components.REST.API.Relationships.RoleID;
+import api.components.REST.API.Staff.Staff;
+import api.components.REST.API.Staff.StaffRepository;
+import api.components.REST.API.Store.Store;
+import api.components.REST.API.Store.StoreRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +26,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 
 @SpringBootApplication
@@ -17,17 +38,24 @@ public class RestApiApplication {
 	@Autowired
 	private ActorRepository actorRepo;
 	private FilmRepository filmRepo;
+	private Film_ActorRepository film_actorRepo;
+	private CategoryRepository categoryRepo;
+	private Film_CategoryRepository film_categoryRepo;
 	private CountryRepository countryRepo;
 	private CityRepository cityRepo;
 	private AddressRepository addressRepo;
 	private StaffRepository staffRepo;
 	private StoreRepository storeRepo;
 
-	public RestApiApplication(ActorRepository actorRepo, FilmRepository filmRepo, CountryRepository countryRepo,
-							  CityRepository cityRepo, AddressRepository addressRepo, StaffRepository staffRepo,
-							  StoreRepository storeRepo){
+	public RestApiApplication(ActorRepository actorRepo, FilmRepository filmRepo, Film_ActorRepository film_actorRepo,
+							  CategoryRepository categoryRepo, Film_CategoryRepository film_categoryRepo,
+							  CountryRepository countryRepo, CityRepository cityRepo, AddressRepository addressRepo,
+							  StaffRepository staffRepo, StoreRepository storeRepo){
 		this.actorRepo = actorRepo;
 		this.filmRepo = filmRepo;
+		this.film_actorRepo = film_actorRepo;
+		this.categoryRepo = categoryRepo;
+		this.film_categoryRepo = film_categoryRepo;
 		this.countryRepo = countryRepo;
 		this.cityRepo = cityRepo;
 		this.addressRepo = addressRepo;
@@ -97,6 +125,17 @@ public class RestApiApplication {
 		return films;
 	}
 
+	@GetMapping("allCategories")
+	public List<String> getAllCategories() throws JsonProcessingException {
+		List<Category> objectCategories = categoryRepo.findAll();
+		List<String> categories = new ArrayList<String>();
+
+		for(Category category : objectCategories){
+			categories.add(new ObjectMapper().writerWithView(JsonViews.Category.class).writeValueAsString(category));
+		}
+		return categories;
+	}
+
 	@GetMapping("allCountries")
 	public Iterable<Country> getAllCountries() {
 		return countryRepo.findAll();
@@ -126,7 +165,7 @@ public class RestApiApplication {
 		List<String> stores = new ArrayList<String>();
 
 		for(Store store : objectStores){
-			stores.add(new ObjectMapper().writerWithView(JsonViews.Film.class).writeValueAsString(store));
+			stores.add(new ObjectMapper().writerWithView(JsonViews.Store.class).writeValueAsString(store));
 		}
 		return stores;
 	}
@@ -137,11 +176,39 @@ public class RestApiApplication {
 		return actorRepo.save(actor);
 	}
 
+	@PutMapping(value = "editActor/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String editActor(@PathVariable("id") int actorID, @RequestBody Actor actor) throws JsonProcessingException {
+
+		Actor x = actorRepo.findById(actorID).get();
+		x.setFirstName(actor.getFirstName());
+		x.setLastName(actor.getLastName());
+		actorRepo.save(x);
+
+		return new ObjectMapper().writerWithView(JsonViews.Actor.class).writeValueAsString(x);
+	}
+
+	//NOT READY YET
+	@PostMapping(value = "addRole/{filmID}/{actorID}")
+	public String addRole(@PathVariable("filmID") int filmID, @PathVariable("actorID") int actorID){
+		RoleID newRoleID = new RoleID();
+		newRoleID.setActor_id(actorID);
+		newRoleID.setFilm_id(filmID);
+
+		Film_Actor newRole = new Film_Actor();
+		newRole.setId(newRoleID);
+		newRole.setActor(actorRepo.findById(actorID).get());
+		newRole.setFilm(filmRepo.findById(filmID).get());
+
+		film_actorRepo.save(newRole);
+
+		return "Actor ID: " + actorID + " added to a film with ID: " + filmID + ".";
+	}
+
 	@DeleteMapping("removeActor/{id}")
 	public String removeActor(@PathVariable("id") int actorID){
 		if(actorRepo.existsById(actorID)){
 			actorRepo.deleteById(actorID);
-			return "Actor " + actorID + " removed.";
+			return "api/components/REST/API/Actor " + actorID + " removed.";
 		}
 		else{
 			return "Actor with ID " + actorID + " not found.";

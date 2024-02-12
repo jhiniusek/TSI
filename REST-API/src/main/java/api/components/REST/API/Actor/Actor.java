@@ -1,12 +1,10 @@
-package api.components.REST.API;
+package api.components.REST.API.Actor;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import api.components.REST.API.Film.Film;
+import api.components.REST.API.JsonViews;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,14 +14,14 @@ public class Actor {
     @Column(name="actor_id",unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView({ JsonViews.Actor.class})
-    private short actorID;
+    private int actorID;
 
     @Column(name="first_name")
-    @JsonView({ JsonViews.Actor.class, JsonViews.Film.class })
+    @JsonView({ JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class})
     private String firstName;
 
     @Column(name="last_name")
-    @JsonView({ JsonViews.Actor.class, JsonViews.Film.class })
+    @JsonView({ JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class})
     private String lastName;
 
     @ManyToMany
@@ -33,11 +31,11 @@ public class Actor {
     @JsonView(JsonViews.Actor.class)
     private Set<Film> rolesOfActor;
 
-    public short getActorID() {
+    public int getActorID() {
         return actorID;
     }
 
-    public void setActorID(short actorID) {
+    public void setActorID(int actorID) {
         this.actorID = actorID;
     }
 

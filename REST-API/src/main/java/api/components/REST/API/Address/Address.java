@@ -1,6 +1,6 @@
-package api.components.REST.API;
+package api.components.REST.API.Address;
 
-import com.fasterxml.jackson.annotation.JsonView;
+import api.components.REST.API.City.City;
 import jakarta.persistence.*;
 
 @Entity
