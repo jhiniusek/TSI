@@ -1,0 +1,13 @@
+package api.components.sakilaproject;
+public class JsonViews
+{
+    public static class Actor {}
+
+    public static class Film {}
+
+    public static class Category{}
+
+    public static class Staff {}
+
+    public static class Store {}
+}
