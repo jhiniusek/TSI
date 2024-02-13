@@ -1,6 +1,6 @@
 package api.components.sakilaproject.category;
 
-import api.components.sakilaproject.relationships.Film_Category;
+import api.components.sakilaproject.film.Film;
 import api.components.sakilaproject.JsonViews;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
@@ -14,16 +14,16 @@ public class Category {
     @Id
     @Column(name="category_id",unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView({ JsonViews.Category.class})
+    @JsonView({ JsonViews.Category.class })
     private short categoryID;
 
     @Column(name="name")
     @JsonView({ JsonViews.Category.class, JsonViews.Film.class, JsonViews.Actor.class })
     private String categoryName;
 
-    @OneToMany(mappedBy = "category")
-    @JsonView({ JsonViews.Category.class})
-    private Set<Film_Category> filmsOfCategory;
+    @ManyToMany(mappedBy = "categoriesOfFilm")
+    @JsonView({ JsonViews.Category.class })
+    private Set<Film> filmsOfCategory;
 
     public short getCategoryID() {
         return categoryID;
@@ -41,11 +41,11 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public Set<Film_Category> getFilmsOfCategory() {
+    public Set<Film> getFilmsOfCategory() {
         return filmsOfCategory;
     }
 
-    public void setFilmsOfCategory(Set<Film_Category> filmsOfCategory) {
+    public void setFilmsOfCategory(Set<Film> filmsOfCategory) {
         this.filmsOfCategory = filmsOfCategory;
     }
 }

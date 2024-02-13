@@ -21,12 +21,15 @@ import api.components.sakilaproject.store.Store;
 import api.components.sakilaproject.store.StoreRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 @SpringBootApplication
@@ -64,76 +67,18 @@ public class RestApiApplication {
 	}
 
 	//GETTING RECORDS FROM TABLES
-	@GetMapping("allActors")
-	public List<String> getAllActors() throws JsonProcessingException {
-
-		List<Actor> objectActors = actorRepo.findAll();
-		List<String> actors = new ArrayList<String>();
-
-		for(Actor actor : objectActors){
-			actors.add(new ObjectMapper().writerWithView(JsonViews.Actor.class).writeValueAsString(actor));
-		}
-		return actors;
-	}
-
-	@GetMapping("actor/searchById/{id}")
-	public String getActorByID(@PathVariable("id") int actorID) throws JsonProcessingException {
-		Actor x = actorRepo.findById(actorID).get();
-		return new ObjectMapper().writerWithView(JsonViews.Actor.class).writeValueAsString(x);
-	}
-
-	@GetMapping("actor/searchByName/{name}")
-	public List<String> getActorByName(@PathVariable("name") String actorName) throws JsonProcessingException {
-		List<Actor> objectActors = actorRepo.findAll();
-		List<String> actors = new ArrayList<String>();
-
-		for(Actor x : objectActors){
-			if(x.getFirstName().toLowerCase().contains(actorName.toLowerCase())){
-				actors.add(new ObjectMapper().writerWithView(JsonViews.Actor.class).writeValueAsString(x));
-			}
-		}
-		return actors;
-	}
-
-	@GetMapping("allFilms")
-	public List<String> getAllFilms() throws JsonProcessingException {
-		List<Film> objectFilms = filmRepo.findAll();
-		List<String> films = new ArrayList<String>();
-
-		for(Film film : objectFilms){
-			films.add(new ObjectMapper().writerWithView(JsonViews.Film.class).writeValueAsString(film));
-		}
-		return films;
-	}
-
-	@GetMapping("film/searchById/{id}")
-	public String getFilmByID(@PathVariable("id") int filmID) throws JsonProcessingException {
-		Film x = filmRepo.findById(filmID).get();
-		return new ObjectMapper().writerWithView(JsonViews.Film.class).writeValueAsString(x);
-	}
-
-	@GetMapping("film/searchByTitle/{title}")
-	public List<String> getFilmsByTitle(@PathVariable("title") String filmTitle) throws JsonProcessingException {
-		List<Film> objectFilms = filmRepo.findAll();
-		List<String> films = new ArrayList<String>();
-
-		for(Film x : objectFilms){
-			if(x.getTitle().toLowerCase().contains(filmTitle.toLowerCase())){
-				films.add(new ObjectMapper().writerWithView(JsonViews.Film.class).writeValueAsString(x));
-			}
-		}
-		return films;
-	}
 
 	@GetMapping("allCategories")
-	public List<String> getAllCategories() throws JsonProcessingException {
+	public String getAllCategories() throws JsonProcessingException {
 		List<Category> objectCategories = categoryRepo.findAll();
 		List<String> categories = new ArrayList<String>();
 
 		for(Category category : objectCategories){
-			categories.add(new ObjectMapper().writerWithView(JsonViews.Category.class).writeValueAsString(category));
+			JSONObject jo = JSONFix.fixOrder(category, JsonViews.Category.class);
+			categories.add(jo.toString());
 		}
-		return categories;
+		System.out.println(categories);
+		return categories.toString();
 	}
 
 	@GetMapping("allCountries")
@@ -150,42 +95,28 @@ public class RestApiApplication {
 	}
 
 	@GetMapping("allStaff")
-	public List<String> getAllStaff() throws JsonProcessingException {
+	public String getAllStaff() throws JsonProcessingException {
 		List<Staff> objectStaff = staffRepo.findAll();
 		List<String> staffList = new ArrayList<String>();
 
 		for(Staff staff : objectStaff){
-			staffList.add(new ObjectMapper().writerWithView(JsonViews.Staff.class).writeValueAsString(staff));
+			JSONObject jo = JSONFix.fixOrder(staff, JsonViews.Staff.class);
+			staffList.add(jo.toString());
 		}
-		return staffList;
+		return staffList.toString();
 	}
 	@GetMapping("allStores")
-	public List<String> getAllStores() throws JsonProcessingException {
+	public String getAllStores() throws JsonProcessingException {
 		List<Store> objectStores = storeRepo.findAll();
 		List<String> stores = new ArrayList<String>();
 
 		for(Store store : objectStores){
-			stores.add(new ObjectMapper().writerWithView(JsonViews.Store.class).writeValueAsString(store));
+			JSONObject jo = JSONFix.fixOrder(store, JsonViews.Store.class);
+			stores.add(jo.toString());
 		}
-		return stores;
+		return stores.toString();
 	}
 
-	// EDIT ACTORS
-	@PostMapping(value = "addActor", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Actor addActor(@RequestBody Actor actor){
-		return actorRepo.save(actor);
-	}
-
-	@PutMapping(value = "editActor/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String editActor(@PathVariable("id") int actorID, @RequestBody Actor actor) throws JsonProcessingException {
-
-		Actor x = actorRepo.findById(actorID).get();
-		x.setFirstName(actor.getFirstName());
-		x.setLastName(actor.getLastName());
-		actorRepo.save(x);
-
-		return new ObjectMapper().writerWithView(JsonViews.Actor.class).writeValueAsString(x);
-	}
 
 	//NOT READY YET
 	@PostMapping(value = "addRole/{filmID}/{actorID}")
@@ -204,16 +135,6 @@ public class RestApiApplication {
 		return "Actor ID: " + actorID + " added to a film with ID: " + filmID + ".";
 	}
 
-	@DeleteMapping("removeActor/{id}")
-	public String removeActor(@PathVariable("id") int actorID){
-		if(actorRepo.existsById(actorID)){
-			actorRepo.deleteById(actorID);
-			return "api/components/sakilaproject/actor " + actorID + " removed.";
-		}
-		else{
-			return "Actor with ID " + actorID + " not found.";
-		}
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(RestApiApplication.class, args);

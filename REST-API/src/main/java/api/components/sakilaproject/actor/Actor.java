@@ -21,7 +21,7 @@ public class Actor {
     private String firstName;
 
     @Column(name="last_name")
-    @JsonView({ JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class})
+    @JsonView({JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class})
     private String lastName;
 
     @ManyToMany
