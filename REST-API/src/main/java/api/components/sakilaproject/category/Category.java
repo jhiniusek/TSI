@@ -4,7 +4,6 @@ import api.components.sakilaproject.film.Film;
 import api.components.sakilaproject.JsonViews;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
-
 import java.util.Set;
 
 @Entity

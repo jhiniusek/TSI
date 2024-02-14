@@ -14,7 +14,7 @@ public class ActorStepDefs{
     }
 
     @When("I set the actor's id to {int}")
-    public void setActorID(int actorID){
+    public void setActorID(short actorID){
         actor.setActorID(actorID);
     }
 

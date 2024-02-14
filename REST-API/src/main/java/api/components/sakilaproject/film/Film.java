@@ -5,7 +5,6 @@ import api.components.sakilaproject.category.Category;
 import api.components.sakilaproject.JsonViews;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-
 import java.util.Set;
 
 @Entity
@@ -16,7 +15,7 @@ public class Film {
     @Column(name="film_id",unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView({JsonViews.Film.class })
-    private int filmID;
+    private short filmID;
 
     @Column(name="title")
     @JsonView({ JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class })
@@ -45,11 +44,11 @@ public class Film {
     @JsonView(JsonViews.Film.class)
     private Set<Actor> actorsInFilm;
 
-    public int getFilmID() {
+    public short getFilmID() {
         return filmID;
     }
 
-    public void setFilmID(int filmID) {
+    public void setFilmID(short filmID) {
         this.filmID = filmID;
     }
 

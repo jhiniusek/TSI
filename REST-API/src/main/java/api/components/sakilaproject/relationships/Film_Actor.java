@@ -21,7 +21,6 @@ public class Film_Actor {
     @JoinColumn(name = "film_id", nullable = false)
     private Film film;
 
-
     public RoleID getId() {
         return id;
     }
