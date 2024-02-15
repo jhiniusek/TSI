@@ -1,5 +1,6 @@
 package api.components.sakilaproject.address;
 
+import api.components.sakilaproject.actor.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,10 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class AddressController {
 
     @Autowired
-    private AddressRepository addressRepo;
+    private final AddressService addressService;
+
+    public AddressController (AddressService addressService) {
+        this.addressService = addressService;
+    }
+
 
     @GetMapping
     public Iterable<Address> getAllAddresses() {
-        return addressRepo.findAll();
+        return addressService.readAddresses();
     }
 }

@@ -2,6 +2,7 @@ package api.components.sakilaproject.category;
 
 import api.components.sakilaproject.JSONFix;
 import api.components.sakilaproject.JsonViews;
+import api.components.sakilaproject.address.AddressService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +17,14 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private CategoryRepository categoryRepo;
+    private final CategoryService categoryService;
+
+    public CategoryController (CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping
     public String getAllCategories() throws JsonProcessingException {
-        List<Category> objectCategories = categoryRepo.findAll();
-        List<String> categories = new ArrayList<String>();
-
-        for(Category category : objectCategories){
-            JSONObject jo = JSONFix.fixOrder(category, JsonViews.Category.class);
-            categories.add(jo.toString());
-        }
-        System.out.println(categories);
-        return categories.toString();
+        return categoryService.readCategories();
     }
 }

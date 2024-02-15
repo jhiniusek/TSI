@@ -20,7 +20,7 @@ public class Film {
     private short filmID;
 
     @Column(name="title")
-    @JsonView({ JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class, JsonViews.Inventory.class})
+    @JsonView({ JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class, JsonViews.Inventory.class, JsonViews.Rental.class, JsonViews.Payment.class})
     private String title;
 
     @ManyToMany
@@ -48,15 +48,15 @@ public class Film {
     private int duration;
 
     @Column(name="rental_duration")
-    @JsonView(JsonViews.Inventory.class)
+    @JsonView({JsonViews.Inventory.class, JsonViews.Rental.class, JsonViews.Payment.class})
     private int rentalDuration;
 
     @Column(name="rental_rate")
-    @JsonView(JsonViews.Inventory.class)
+    @JsonView({JsonViews.Inventory.class, JsonViews.Rental.class, JsonViews.Payment.class})
     private double rentalRate;
 
     @Column(name="replacement_cost")
-    @JsonView(JsonViews.Inventory.class)
+    @JsonView({JsonViews.Inventory.class, JsonViews.Rental.class, JsonViews.Payment.class})
     private double replacementCost;
 
     @Column(name="rating")

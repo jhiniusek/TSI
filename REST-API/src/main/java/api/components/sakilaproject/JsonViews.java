@@ -7,4 +7,6 @@ public class JsonViews {
     public static class Store {}
     public static class Inventory {}
     public static class Customer {}
+    public static class Rental {}
+    public static class Payment {}
 }

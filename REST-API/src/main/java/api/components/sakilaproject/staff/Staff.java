@@ -16,11 +16,11 @@ public class Staff {
     private short staffID;
 
     @Column(name="first_name")
-    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class, JsonViews.Inventory.class})
+    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class, JsonViews.Inventory.class, JsonViews.Rental.class, JsonViews.Payment.class})
     private String firstName;
 
     @Column(name="last_name")
-    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class, JsonViews.Inventory.class})
+    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class, JsonViews.Inventory.class, JsonViews.Rental.class, JsonViews.Payment.class})
     private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -29,12 +29,12 @@ public class Staff {
     private Address address;
 
     @Column(name="email")
-    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class, JsonViews.Inventory.class})
+    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class, JsonViews.Inventory.class, JsonViews.Rental.class, JsonViews.Payment.class})
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "store_id", referencedColumnName = "store_id")
-    @JsonView(JsonViews.Staff.class)
+    @JsonView({JsonViews.Staff.class, JsonViews.Payment.class})
     private Store store;
 
     public short getStaffID() {
