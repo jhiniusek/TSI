@@ -64,4 +64,9 @@ public class PaymentService {
         }
         return payments.toString();
     }
+
+    public Payment createPayment(Payment payment){
+        paymentRepo.save(payment);
+        return payment;
+    }
 }

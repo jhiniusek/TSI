@@ -2,6 +2,7 @@ package api.components.sakilaproject.language;
 
 import api.components.sakilaproject.country.Country;
 import api.components.sakilaproject.country.CountryRepository;
+import api.components.sakilaproject.country.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/languages")
 public class LanguageController {
     @Autowired
-    private LanguageRepository languageRepo;
+    private final LanguageService languageService;
+
+    public LanguageController (LanguageService languageService) {
+        this.languageService = languageService;
+    }
 
     @GetMapping
     public Iterable<Language> getAllLanguages() {
-        return languageRepo.findAll();
+        return languageService.readLanguages();
     }
 }

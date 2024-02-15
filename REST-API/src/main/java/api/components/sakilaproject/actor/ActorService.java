@@ -50,8 +50,8 @@ public class ActorService {
         return actors.toString();
     }
 
-    public String readHorrorActors() throws JsonProcessingException {
-        List<Actor> objectActors = actorRepo.findActorsWhoPlayedInHorrors();
+    public String readActorsPlayingInCategory(int categoryID) throws JsonProcessingException {
+        List<Actor> objectActors = actorRepo.findActorsWhoPlayInCategory(categoryID);
         List<String> actors = new ArrayList<String>();
 
         for(Actor x : objectActors){

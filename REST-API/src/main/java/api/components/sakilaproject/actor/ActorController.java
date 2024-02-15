@@ -31,9 +31,9 @@ public class ActorController {
         return actorService.readActorsByName(actorName);
     }
 
-    @GetMapping("/getHorrorStars")
-    public String getHorrorStars() throws JsonProcessingException{
-        return actorService.readHorrorActors();
+    @GetMapping("/getActorsPlayingInCategory/{id}")
+    public String getHorrorStars(@PathVariable("id") int categoryID) throws JsonProcessingException{
+        return actorService.readActorsPlayingInCategory(categoryID);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

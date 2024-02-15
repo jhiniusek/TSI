@@ -59,6 +59,21 @@ public class FilmService {
         }
         return films.toString();
     }
+
+    public Film createFilm(Film film){
+        filmRepo.save(film);
+        return film;
+    }
+
+    public String removeFilm(int ID){
+        if(filmRepo.existsById(ID)){
+            filmRepo.deleteById(ID);
+            return "Film with ID " + ID + " removed.";
+        }
+        else{
+            return "Film with ID " + ID + " not found.";
+        }
+    }
 }
 
 

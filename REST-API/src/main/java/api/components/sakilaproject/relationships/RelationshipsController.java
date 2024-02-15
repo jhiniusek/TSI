@@ -22,6 +22,11 @@ public class RelationshipsController {
         return relationshipService.addRole(filmID, actorID);
     }
 
+    @PostMapping("addCategory/{filmID}/{categoryID}")
+    public String addCategory(@PathVariable("filmID") short filmID, @PathVariable("categoryID") short categoryID){
+        return relationshipService.addCategoryToFilm(filmID,categoryID);
+    }
+
     @DeleteMapping("deleteRole/{filmID}/{actorID}")
     public String deleteRole(@PathVariable("filmID") int filmID, @PathVariable("actorID") int actorID){
         return "not ready yet";

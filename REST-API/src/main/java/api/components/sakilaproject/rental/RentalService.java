@@ -2,6 +2,7 @@ package api.components.sakilaproject.rental;
 
 import api.components.sakilaproject.JSONFix;
 import api.components.sakilaproject.JsonViews;
+import api.components.sakilaproject.payment.Payment;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,10 @@ public class RentalService {
             rentals.add(jo.toString());
         }
         return rentals.toString();
+    }
+
+    public Rental createRental(Rental rental){
+        rentalRepo.save(rental);
+        return rental;
     }
 }

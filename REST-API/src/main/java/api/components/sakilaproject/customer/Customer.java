@@ -34,7 +34,7 @@ public class Customer {
     @JsonView({JsonViews.Customer.class, JsonViews.Rental.class, JsonViews.Payment.class})
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id", referencedColumnName = "address_id")
     @JsonView({JsonViews.Customer.class, JsonViews.Rental.class, JsonViews.Payment.class})
     private Address address;

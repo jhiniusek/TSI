@@ -48,4 +48,25 @@ public class RelationshipService {
         film_actorRepo.save(newRole);
         return "Actor ID: " + actorID + " added to a film with ID: " + filmID + ".";
     }
+
+    public String addCategoryToFilm(short filmID, short categoryID){
+        FilmCatID newFilmCatID = new FilmCatID();
+        newFilmCatID.setCategory_id(categoryID);
+        newFilmCatID.setFilm_id(filmID);
+
+        Film_Category newFilm_Category = new Film_Category();
+        newFilm_Category.setId(newFilmCatID);
+        try{
+            newFilm_Category.setCategory(categoryRepo.findById((int)categoryID).get());
+        } catch (Exception e) {
+            return "Invalid Category ID.";
+        }
+        try{
+            newFilm_Category.setFilm(filmRepo.findById((int)filmID).get());
+        } catch (Exception e) {
+            return "Invalid Film ID";
+        }
+        film_categoryRepo.save(newFilm_Category);
+        return "Category ID: " + categoryID + " added to a film with ID: " + filmID + ".";
+    }
 }

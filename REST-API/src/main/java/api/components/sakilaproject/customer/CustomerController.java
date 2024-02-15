@@ -1,12 +1,11 @@
 package api.components.sakilaproject.customer;
 
+import api.components.sakilaproject.actor.Actor;
 import api.components.sakilaproject.actor.ActorService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customers")
@@ -24,12 +23,17 @@ public class CustomerController {
     }
 
     @GetMapping("/searchByID/{id}")
-    public String getCustomerByID(@PathVariable("id") int custID) throws JsonProcessingException {
-        return customerService.readCustomer(custID);
+    public String getCustomerByID(@PathVariable("id") int customerID) throws JsonProcessingException {
+        return customerService.readCustomer(customerID);
     }
 
     @GetMapping("/searchByName/{name}")
-    public String getCustomerByName(@PathVariable("name") String custName) throws JsonProcessingException {
-        return customerService.readCustomersByName(custName);
+    public String getCustomerByName(@PathVariable("name") String customerName) throws JsonProcessingException {
+        return customerService.readCustomersByName(customerName);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Customer addCustomer(@RequestBody Customer customer){
+        return customerService.createCustomer(customer);
     }
 }

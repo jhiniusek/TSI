@@ -7,10 +7,9 @@ import api.components.sakilaproject.actor.ActorService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,5 +42,15 @@ public class FilmController {
     @GetMapping("searchByCategoryID/{id}")
     public String searchByCategoryID(@PathVariable("id") int catID) throws JsonProcessingException {
         return filmService.readFilmsByCategoryId(catID);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Film addFilm(@RequestBody Film film){
+        return filmService.createFilm(film);
+    }
+
+    @DeleteMapping("/{id}")
+    public String removeFilm(@PathVariable("id") int filmID){
+        return filmService.removeFilm(filmID);
     }
 }

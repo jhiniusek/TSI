@@ -4,9 +4,13 @@ import api.components.sakilaproject.JSONFix;
 import api.components.sakilaproject.JsonViews;
 import api.components.sakilaproject.film.Film;
 import api.components.sakilaproject.film.FilmRepository;
+import api.components.sakilaproject.relationships.Film_Actor;
+import api.components.sakilaproject.relationships.RoleID;
+import api.components.sakilaproject.store.StoreRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,8 +21,12 @@ public class InventoryService {
 
     @Autowired
     private final InventoryRepository inventoryRepo;
-    public InventoryService (InventoryRepository inventoryRepo){
+    private final FilmRepository filmRepo;
+    private final StoreRepository storeRepo;
+    public InventoryService (InventoryRepository inventoryRepo, FilmRepository filmRepo, StoreRepository storeRepo){
         this.inventoryRepo = inventoryRepo;
+        this.filmRepo = filmRepo;
+        this.storeRepo = storeRepo;
     }
 
 
@@ -63,5 +71,27 @@ public class InventoryService {
             inventories.add(jo.toString());
         }
         return inventories.toString();
+    }
+
+    public Inventory createInventory(Inventory inventory){
+        inventoryRepo.save(inventory);
+        return inventory;
+    }
+
+    public String addInventory(short filmID, short storeID){
+
+        Inventory newInventory = new Inventory();
+        try{
+            newInventory.setStore(storeRepo.findById((int)storeID).get());
+        } catch (Exception e) {
+            return "Invalid Store ID.";
+        }
+        try{
+            newInventory.setFilm(filmRepo.findById((int)filmID).get());
+        } catch (Exception e) {
+            return "Invalid Film ID";
+        }
+        inventoryRepo.save(newInventory);
+        return "Film ID: " + filmID + " added to a store with ID: " + storeID + ".";
     }
 }

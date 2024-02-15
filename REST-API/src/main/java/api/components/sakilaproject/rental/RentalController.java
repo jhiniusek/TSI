@@ -1,12 +1,11 @@
 package api.components.sakilaproject.rental;
 
 import api.components.sakilaproject.inventory.InventoryService;
+import api.components.sakilaproject.payment.Payment;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rentals")
@@ -33,5 +32,10 @@ public class RentalController {
     @GetMapping("/byStoreID/{id}")
     public String getRentalByStoreID(@PathVariable("id") int storeID) throws JsonProcessingException {
         return rentalService.readRentalsByStoreID(storeID);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Rental addRental(@RequestBody Rental rental){
+        return rentalService.createRental(rental);
     }
 }

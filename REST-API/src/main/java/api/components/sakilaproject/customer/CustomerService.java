@@ -52,4 +52,9 @@ public class CustomerService {
         }
         return customers.toString();
     }
+
+    public Customer createCustomer(Customer customer){
+        customerRepo.save(customer);
+        return customer;
+    }
 }
