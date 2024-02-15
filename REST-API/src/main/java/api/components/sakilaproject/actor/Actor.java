@@ -16,11 +16,11 @@ public class Actor {
     private short actorID;
 
     @Column(name="first_name")
-    @JsonView({ JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class})
+    @JsonView({ JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class, JsonViews.Inventory.class})
     private String firstName;
 
     @Column(name="last_name")
-    @JsonView({JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class})
+    @JsonView({JsonViews.Actor.class, JsonViews.Film.class, JsonViews.Category.class, JsonViews.Inventory.class})
     private String lastName;
 
     @ManyToMany

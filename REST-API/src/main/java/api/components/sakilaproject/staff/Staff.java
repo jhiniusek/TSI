@@ -12,24 +12,24 @@ public class Staff {
     @Id
     @Column(name="staff_id",unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(JsonViews.Staff.class)
+    @JsonView({JsonViews.Staff.class})
     private short staffID;
 
     @Column(name="first_name")
-    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class })
+    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class, JsonViews.Inventory.class})
     private String firstName;
 
     @Column(name="last_name")
-    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class })
+    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class, JsonViews.Inventory.class})
     private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "address_id")
-    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class })
+    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class})
     private Address address;
 
     @Column(name="email")
-    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class })
+    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class, JsonViews.Inventory.class})
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)

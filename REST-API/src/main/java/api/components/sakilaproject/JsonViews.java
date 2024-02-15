@@ -5,4 +5,6 @@ public class JsonViews {
     public static class Category{}
     public static class Staff {}
     public static class Store {}
+    public static class Inventory {}
+    public static class Customer {}
 }

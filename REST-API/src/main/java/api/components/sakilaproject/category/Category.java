@@ -13,11 +13,11 @@ public class Category {
     @Id
     @Column(name="category_id",unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView({ JsonViews.Category.class })
+    @JsonView({ JsonViews.Category.class, JsonViews.Inventory.class})
     private short categoryID;
 
     @Column(name="name")
-    @JsonView({ JsonViews.Category.class, JsonViews.Film.class, JsonViews.Actor.class })
+    @JsonView({ JsonViews.Category.class, JsonViews.Film.class, JsonViews.Actor.class, JsonViews.Inventory.class})
     private String categoryName;
 
     @ManyToMany(mappedBy = "categoriesOfFilm")

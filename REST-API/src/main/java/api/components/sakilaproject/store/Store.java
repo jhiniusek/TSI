@@ -12,25 +12,25 @@ public class Store {
     @Id
     @Column(name="store_id",unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(JsonViews.Store.class)
-    private short staffID;
+    @JsonView({JsonViews.Store.class, JsonViews.Inventory.class, JsonViews.Customer.class})
+    private short storeID;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_staff_id", referencedColumnName = "staff_id")
-    @JsonView(JsonViews.Store.class)
+    @JsonView({JsonViews.Store.class, JsonViews.Inventory.class})
     private Staff manager;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "address_id")
-    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class })
+    @JsonView({ JsonViews.Staff.class, JsonViews.Store.class, JsonViews.Inventory.class, JsonViews.Customer.class})
     private Address address;
 
-    public short getStaffID() {
-        return staffID;
+    public short getStoreID() {
+        return storeID;
     }
 
-    public void setStaffID(short staffID) {
-        this.staffID = staffID;
+    public void setStoreID(short storeID) {
+        this.storeID = storeID;
     }
 
     public Staff getManager() {
