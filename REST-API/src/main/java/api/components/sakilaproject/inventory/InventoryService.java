@@ -42,4 +42,26 @@ public class InventoryService {
         }
         return inventories.toString();
     }
+
+    public String readInventoriesByFilmID(int filmID) throws JsonProcessingException {
+        List<Inventory> objectInventories = inventoryRepo.getInventoryByFilmID(filmID);
+        List<String> inventories = new ArrayList<String>();
+
+        for(Inventory inventory : objectInventories){
+            JSONObject jo = JSONFix.fixOrder(inventory, JsonViews.Inventory.class);
+            inventories.add(jo.toString());
+        }
+        return inventories.toString();
+    }
+
+    public String readInventoriesByStoreID(int storeID) throws JsonProcessingException {
+        List<Inventory> objectInventories = inventoryRepo.getInventoryByStoreID(storeID);
+        List<String> inventories = new ArrayList<String>();
+
+        for(Inventory inventory : objectInventories){
+            JSONObject jo = JSONFix.fixOrder(inventory, JsonViews.Inventory.class);
+            inventories.add(jo.toString());
+        }
+        return inventories.toString();
+    }
 }

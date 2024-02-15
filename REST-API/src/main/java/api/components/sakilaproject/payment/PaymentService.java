@@ -32,5 +32,36 @@ public class PaymentService {
         return payments.toString();
     }
 
+    public String readPaymentsByCustomerID(int custID) throws JsonProcessingException {
+        List<Payment> objectPayments = paymentRepo.getPaymentByCustomerID(custID);
+        List<String> payments = new ArrayList<String>();
 
+        for(Payment payment : objectPayments){
+            JSONObject jo = JSONFix.fixOrder(payment, JsonViews.Payment.class);
+            payments.add(jo.toString());
+        }
+        return payments.toString();
+    }
+
+    public String readRentalsByCustomerName(String name) throws JsonProcessingException {
+        List<Payment> objectPayments = paymentRepo.getPaymentByCustomerName(name);
+        List<String> payments = new ArrayList<String>();
+
+        for(Payment payment : objectPayments){
+            JSONObject jo = JSONFix.fixOrder(payment, JsonViews.Payment.class);
+            payments.add(jo.toString());
+        }
+        return payments.toString();
+    }
+
+    public String readPaymentsByStoreID(int storeID) throws JsonProcessingException {
+        List<Payment> objectPayments = paymentRepo.getPaymentByStoreID(storeID);
+        List<String> payments = new ArrayList<String>();
+
+        for(Payment payment : objectPayments){
+            JSONObject jo = JSONFix.fixOrder(payment, JsonViews.Payment.class);
+            payments.add(jo.toString());
+        }
+        return payments.toString();
+    }
 }

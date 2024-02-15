@@ -32,5 +32,24 @@ public class CustomerService {
         return customers.toString();
     }
 
+    public String readCustomer(Integer id) throws JsonProcessingException {
+        Customer customer;
+        try{
+            customer = customerRepo.findById(id).get();
+        } catch (Exception e){
+            return "Invalid actor ID.";
+        }
+        return (JSONFix.fixOrder(customer, JsonViews.Customer.class)).toString();
+    }
 
+    public String readCustomersByName(String name) throws JsonProcessingException {
+        List<Customer> objectCustomers = customerRepo.findCustomerByName(name);
+        List<String> customers = new ArrayList<String>();
+
+        for(Customer customer : objectCustomers){
+            JSONObject jo = JSONFix.fixOrder(customer, JsonViews.Customer.class);
+            customers.add(jo.toString());
+        }
+        return customers.toString();
+    }
 }

@@ -24,4 +24,14 @@ public class InventoryController {
     public String getInventoryByID(@PathVariable("id") int inventoryID) throws JsonProcessingException {
         return inventoryService.readInventory(inventoryID);
     }
+
+    @GetMapping("/byFilmID/{id}")
+    public String getInventoryByFilmID(@PathVariable("id") int filmID) throws JsonProcessingException {
+        return inventoryService.readInventoriesByFilmID(filmID);
+    }
+
+    @GetMapping("/byStoreID/{id}")
+    public String getInventoryByStoreID(@PathVariable("id") int store) throws JsonProcessingException {
+        return inventoryService.readInventoriesByStoreID(store);
+    }
 }

@@ -32,21 +32,19 @@ public class FilmService {
         List<String> films = new ArrayList<String>();
 
         for(Film film : objectFilms){
-            JSONObject jo = JSONFix.fixOrder(film, JsonViews.Actor.class);
+            JSONObject jo = JSONFix.fixOrder(film, JsonViews.Film.class);
             films.add(jo.toString());
         }
         return films.toString();
     }
 
     public String readFilmsByTitle(String title) throws JsonProcessingException {
-        List<Film> objectFilms = filmRepo.findAll();
+        List<Film> objectFilms = filmRepo.findFilmByTitle(title);
         List<String> films = new ArrayList<String>();
 
-        for(Film x : objectFilms){
-            if(x.getTitle().toLowerCase().contains(title.toLowerCase())){
-                JSONObject jo = JSONFix.fixOrder(x,JsonViews.Film.class);
-                films.add(jo.toString());
-            }
+        for(Film film : objectFilms){
+            JSONObject jo = JSONFix.fixOrder(film, JsonViews.Film.class);
+            films.add(jo.toString());
         }
         return films.toString();
     }

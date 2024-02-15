@@ -40,22 +40,14 @@ public class ActorService {
     }
 
     public String readActorsByName(String name) throws JsonProcessingException {
-        List<Actor> allActors = actorRepo.findAll();
-        List<String> actorsByName = new ArrayList<String>();
+        List<Actor> objectActors = actorRepo.findActorsByName(name);
+        List<String> actors = new ArrayList<String>();
 
-        for(Actor x : allActors){
-            if(x.getFirstName().toLowerCase().contains(name.toLowerCase())){
-                JSONObject jo = JSONFix.fixOrder(x, JsonViews.Actor.class);
-                actorsByName.add(jo.toString());
-            }
-            if(x.getLastName().toLowerCase().contains(name.toLowerCase())){
-                if(!actorsByName.contains(x)){
-                    JSONObject jo = JSONFix.fixOrder(x, JsonViews.Actor.class);
-                    actorsByName.add(jo.toString());
-                }
-            }
+        for(Actor actor : objectActors){
+            JSONObject jo = JSONFix.fixOrder(actor, JsonViews.Actor.class);
+            actors.add(jo.toString());
         }
-        return actorsByName.toString();
+        return actors.toString();
     }
 
     public String readHorrorActors() throws JsonProcessingException {
