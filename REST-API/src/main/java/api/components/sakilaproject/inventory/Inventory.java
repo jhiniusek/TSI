@@ -2,7 +2,6 @@ package api.components.sakilaproject.inventory;
 
 import api.components.sakilaproject.JsonViews;
 import api.components.sakilaproject.film.Film;
-import api.components.sakilaproject.language.Language;
 import api.components.sakilaproject.store.Store;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;

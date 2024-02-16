@@ -2,12 +2,10 @@ package api.components.sakilaproject.rental;
 
 import api.components.sakilaproject.JSONFix;
 import api.components.sakilaproject.JsonViews;
-import api.components.sakilaproject.payment.Payment;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 

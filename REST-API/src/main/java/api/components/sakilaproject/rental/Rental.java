@@ -4,10 +4,8 @@ import api.components.sakilaproject.JsonViews;
 import api.components.sakilaproject.customer.Customer;
 import api.components.sakilaproject.inventory.Inventory;
 import api.components.sakilaproject.staff.Staff;
-import api.components.sakilaproject.store.Store;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity

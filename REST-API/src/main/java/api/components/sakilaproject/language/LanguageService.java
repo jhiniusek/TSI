@@ -1,10 +1,7 @@
 package api.components.sakilaproject.language;
 
-import api.components.sakilaproject.country.Country;
-import api.components.sakilaproject.country.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

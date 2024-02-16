@@ -1,6 +1,5 @@
 package api.components.sakilaproject.film;
 
-import api.components.sakilaproject.customer.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import java.util.List;

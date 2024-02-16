@@ -1,7 +1,5 @@
 package api.components.sakilaproject.address;
 
-import api.components.sakilaproject.actor.Actor;
-import api.components.sakilaproject.actor.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

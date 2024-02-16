@@ -1,7 +1,5 @@
 package api.components.sakilaproject.rental;
 
-import api.components.sakilaproject.inventory.InventoryService;
-import api.components.sakilaproject.payment.Payment;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

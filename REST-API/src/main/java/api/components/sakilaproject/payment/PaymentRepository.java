@@ -1,10 +1,7 @@
 package api.components.sakilaproject.payment;
 
-import api.components.sakilaproject.inventory.Inventory;
-import api.components.sakilaproject.rental.Rental;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment,Integer> {

@@ -6,7 +6,6 @@ import api.components.sakilaproject.rental.Rental;
 import api.components.sakilaproject.staff.Staff;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity

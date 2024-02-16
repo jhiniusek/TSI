@@ -1,5 +1,4 @@
 package api.components.sakilaproject.actor;
-import api.components.sakilaproject.rental.Rental;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

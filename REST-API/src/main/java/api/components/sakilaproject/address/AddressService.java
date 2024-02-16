@@ -1,7 +1,5 @@
 package api.components.sakilaproject.address;
 
-import api.components.sakilaproject.actor.Actor;
-import api.components.sakilaproject.actor.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

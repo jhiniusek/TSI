@@ -2,17 +2,12 @@ package api.components.sakilaproject.inventory;
 
 import api.components.sakilaproject.JSONFix;
 import api.components.sakilaproject.JsonViews;
-import api.components.sakilaproject.film.Film;
 import api.components.sakilaproject.film.FilmRepository;
-import api.components.sakilaproject.relationships.Film_Actor;
-import api.components.sakilaproject.relationships.RoleID;
 import api.components.sakilaproject.store.StoreRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 

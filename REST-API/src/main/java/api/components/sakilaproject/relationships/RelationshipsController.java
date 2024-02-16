@@ -1,8 +1,5 @@
 package api.components.sakilaproject.relationships;
 
-import api.components.sakilaproject.actor.ActorRepository;
-import api.components.sakilaproject.customer.CustomerService;
-import api.components.sakilaproject.film.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

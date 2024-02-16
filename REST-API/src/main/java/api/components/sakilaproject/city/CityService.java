@@ -1,6 +1,5 @@
 package api.components.sakilaproject.city;
 
-import api.components.sakilaproject.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

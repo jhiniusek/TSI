@@ -1,17 +1,9 @@
 package api.components.sakilaproject.film;
 
-import api.components.sakilaproject.JSONFix;
-import api.components.sakilaproject.JsonViews;
-import api.components.sakilaproject.actor.Actor;
-import api.components.sakilaproject.actor.ActorService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/films")

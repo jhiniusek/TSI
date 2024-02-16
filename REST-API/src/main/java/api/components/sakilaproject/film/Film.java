@@ -3,7 +3,6 @@ package api.components.sakilaproject.film;
 import api.components.sakilaproject.actor.Actor;
 import api.components.sakilaproject.category.Category;
 import api.components.sakilaproject.JsonViews;
-import api.components.sakilaproject.country.Country;
 import api.components.sakilaproject.language.Language;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
