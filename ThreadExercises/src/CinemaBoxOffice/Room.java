@@ -7,7 +7,7 @@ import java.util.List;
 public class Room {
     private int roomNumber;
     private String title;
-    private List<Seat> seats = Collections.synchronizedList(new ArrayList<Seat>());
+    private final List<Seat> seats = Collections.synchronizedList(new ArrayList<Seat>());
 
     public Room(int roomNumber, String title) {
         this.roomNumber = roomNumber;
@@ -57,6 +57,7 @@ public class Room {
         for(Seat seat : seats){
             if(seat.getRow()==row && seat.getCol()==col) {
                 if (seat.isFree()) {
+                    seat.setFree(false);
                     return seat;
                 } else {
                     System.out.println("This seat is taken.");
