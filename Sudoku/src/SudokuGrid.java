@@ -35,6 +35,15 @@ public class SudokuGrid {
         return null;
     }
 
+    public Cell getFirstEmpty(){
+        for(Cell cell : cells){
+            if(cell.getValue()==0){
+                return cell;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Cell> getBox(int box){
         ArrayList<Cell> myBox = new ArrayList<Cell>();
         for(Cell cell : cells){
@@ -106,6 +115,7 @@ public class SudokuGrid {
             }
         }
         if(!findFirstSolution()){
+            generateEmptyGrid();
             generateRandomSudoku();
         }
     }
@@ -117,6 +127,16 @@ public class SudokuGrid {
             }
         }
         return true;
+    }
+
+    public int emptyCells(){
+        int counter = 0;
+        for(Cell cell : cells){
+            if(cell.getValue()==0){
+                counter++;
+            }
+        }
+        return counter;
     }
 
     public void setPuzzle(int difficulty){
@@ -135,6 +155,37 @@ public class SudokuGrid {
                 puzzle.add(cells.get(randomCell));
             }
         }
+    }
+
+    public void setPuzzleRecursive(){
+        int counter = 0;
+        solutions.clear();
+        int cellsToHide = 58;
+        while(puzzle.size()!=cellsToHide){
+            int randomCell =  0 + (int)(Math.random() * ((80 - 0) + 1));
+            if(!puzzle.contains(cells.get(randomCell))){
+                Cell cell = cells.get(randomCell);
+                int temp = cell.getValue();
+                cell.setValue(0);
+                puzzle.add(cell);
+                findAllSolutions();             ///error somewhere
+                if(solutions.size()>1){
+                    cell.setValue(temp);
+                    puzzle.remove(cell);
+                }
+                solutions.clear();
+            }
+            counter++;
+            if(counter > cellsToHide*4){
+                System.out.println("Couldn't find a puzzle, generating new grid...");
+                puzzle.clear();
+                generateEmptyGrid();
+                generateRandomSudoku();
+                setPuzzleRecursive();
+                break;
+            }
+        }
+        System.out.println(this);
     }
 
     public boolean isSafe(int row, int col, int value){
@@ -220,7 +271,7 @@ public class SudokuGrid {
                             if (findAllSolutions()) {
                                 if(isFull()){
                                     solutions.add(exportGrid());
-                                    System.out.println(this);
+                                    //System.out.println(this);
                                 }
                             }
                             getCell(i,j).setValue(0);
@@ -233,6 +284,42 @@ public class SudokuGrid {
         return true;
     }
 
+    public boolean checkIfMoreSolutions(){
+        for (int i=1; i<= size; i++) {
+            for (int j = 1; j <= size; j++) {
+                int currentValue = getCell(i,j).getValue();
+                if(currentValue==0){
+                    for(int brute = 1; brute <= size; brute++){
+                        if(isSafe(i,j,brute)){
+                            getCell(i,j).setValue(brute);
+                            if (checkIfMoreSolutions()) {
+                                if(isFull()){
+                                    solutions.add(exportGrid());
+                                    if(solutions.size()>1){
+                                        break;
+                                    }
+                                }
+                            }
+                            getCell(i,j).setValue(0);
+                        }
+                    }
+                    if(solutions.size()>1){
+                        break;
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void multithreadSolve(int digit){
+        Cell cell = getFirstEmpty();
+        if(isSafe(cell.getRow(), cell.getCol(), digit)){
+            cell.setValue(digit);
+            findAllSolutions();
+        }
+    }
 
 
     @Override
