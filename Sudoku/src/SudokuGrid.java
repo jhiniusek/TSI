@@ -4,6 +4,7 @@ public class SudokuGrid {
     private int size = 9;
     private ArrayList<Cell> cells;
     private ArrayList<Cell> puzzle = new ArrayList<Cell>();
+    private ArrayList<ArrayList<Integer>> solutions = new ArrayList<ArrayList<Integer>>();
 
     public SudokuGrid() {
         generateEmptyGrid();
@@ -19,6 +20,10 @@ public class SudokuGrid {
 
     public int getSize() {
         return size;
+    }
+
+    public ArrayList<ArrayList<Integer>> getSolutions() {
+        return solutions;
     }
 
     public Cell getCell(int row, int col){
@@ -49,6 +54,7 @@ public class SudokuGrid {
     }
 
     public void importGrid(ArrayList<Integer> numbers){
+        solutions.clear();
         if(numbers.size()==81){
             int counter = 0;
             for(Cell cell : cells){
@@ -62,6 +68,7 @@ public class SudokuGrid {
     }
 
     public void generateEmptyGrid(){
+        solutions.clear();
         ArrayList<Cell> cells = new ArrayList<Cell>();
         int box = 1;
         int cellcounter = 1;
@@ -98,31 +105,36 @@ public class SudokuGrid {
                 getCell(row,col).setValue(value);
             }
         }
-        if(!solve()){
+        if(!findFirstSolution()){
             generateRandomSudoku();
         }
     }
 
-    public void setPuzzle(int difficulty){
-        if(solve()){
-            int cellsToHide = 20;
-            switch(difficulty) {
-                case 1 -> cellsToHide = 20;
-                case 2 -> cellsToHide = 42;
-                case 3 -> cellsToHide = 64;
+    public boolean isFull(){
+        for(Cell cell : cells){
+            if(cell.getValue()==0){
+                return false;
             }
+        }
+        return true;
+    }
 
-            while(puzzle.size()!=cellsToHide){
-                int randomCell =  0 + (int)(Math.random() * ((80 - 0) + 1));
-                if(!puzzle.contains(cells.get(randomCell))){
-                    cells.get(randomCell).setValue(0);
-                    puzzle.add(cells.get(randomCell));
-                }
-            }
-        } else {
-            System.out.println("Cannot generate puzzle.");
+    public void setPuzzle(int difficulty){
+        solutions.clear();
+        int cellsToHide = 20;
+        switch(difficulty) {
+            case 1 -> cellsToHide = 20;
+            case 2 -> cellsToHide = 42;
+            case 3 -> cellsToHide = 64;
         }
 
+        while(puzzle.size()!=cellsToHide){
+            int randomCell =  0 + (int)(Math.random() * ((80 - 0) + 1));
+            if(!puzzle.contains(cells.get(randomCell))){
+                cells.get(randomCell).setValue(0);
+                puzzle.add(cells.get(randomCell));
+            }
+        }
     }
 
     public boolean isSafe(int row, int col, int value){
@@ -153,7 +165,7 @@ public class SudokuGrid {
         return true;
     }
 
-    public boolean solve(){
+    public boolean findFirstSolution(){
         for (int i=1; i<= size; i++) {
             for (int j = 1; j <= size; j++) {
                 int currentValue = getCell(i,j).getValue();
@@ -161,8 +173,55 @@ public class SudokuGrid {
                     for(int brute = 1; brute <= size; brute++){
                         if(isSafe(i,j,brute)){
                             getCell(i,j).setValue(brute);
-                            if (solve()) {
+                            if (findFirstSolution()) {
                                 return true;
+                            }
+                            getCell(i,j).setValue(0);
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean findOneSolution(){
+        for (int i=1; i<= size; i++) {
+            for (int j = 1; j <= size; j++) {
+                int currentValue = getCell(i,j).getValue();
+                if(currentValue==0){
+                    for(int brute = 1; brute <= size; brute++){
+                        if(isSafe(i,j,brute)){
+                            getCell(i,j).setValue(brute);
+                            if (findOneSolution()) {
+                                return true;
+                            }
+                            getCell(i,j).setValue(0);
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        solutions.add(exportGrid());
+        System.out.println(this);
+        return true;
+    }
+
+    public boolean findAllSolutions(){
+        for (int i=1; i<= size; i++) {
+            for (int j = 1; j <= size; j++) {
+                int currentValue = getCell(i,j).getValue();
+                if(currentValue==0){
+                    for(int brute = 1; brute <= size; brute++){
+                        if(isSafe(i,j,brute)){
+                            getCell(i,j).setValue(brute);
+                            if (findAllSolutions()) {
+                                if(isFull()){
+                                    solutions.add(exportGrid());
+                                    System.out.println(this);
+                                }
                             }
                             getCell(i,j).setValue(0);
                         }
