@@ -5,8 +5,6 @@ import java.util.concurrent.ExecutionException;
 public class Multithreading {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        SudokuGrid sudoku = new SudokuGrid();
-
         ArrayList<Integer> invalidSudoku = new ArrayList<Integer>(Arrays.asList(
                 2,9,5,7,4,3,8,6,1,
                 4,3,1,8,6,5,9,7,2,
@@ -33,6 +31,7 @@ public class Multithreading {
 
         /// VALIDATION WITH MULTITHREADING ///
 
+//        SudokuGrid sudoku = new SudokuGrid(9);
 //        sudoku.importGrid(invalidSudoku);
 
 //        Validator check = new Validator(sudoku);
@@ -58,22 +57,18 @@ public class Multithreading {
 
         /// SOLVING WITH MULTITHREADING ///
 
-        ArrayList<Thread> listOfThreads = new ArrayList<Thread>();
-        for(int i = 1; i <= 9; i++){
-            SudokuGrid threadSudoku = new SudokuGrid();
-            threadSudoku.importGrid(toImport);
-            var thread = new Thread(new SolverThread(i, threadSudoku));
-            thread.start();
-            listOfThreads.add(thread);
-        }
-
-        for(Thread x : listOfThreads){
-            x.join();
-        }
-
-
-
-        ///
+//        ArrayList<Thread> listOfThreads = new ArrayList<Thread>();
+//        for(int i = 1; i <= 9; i++){
+//            SudokuGrid threadSudoku = new SudokuGrid(9);
+//            threadSudoku.importGrid(toImport);
+//            var thread = new Thread(new SolverThread(i, threadSudoku));
+//            thread.start();
+//            listOfThreads.add(thread);
+//        }
+//
+//        for(Thread x : listOfThreads){
+//            x.join();
+//        }
 
     }
 }

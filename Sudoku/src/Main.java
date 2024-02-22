@@ -61,38 +61,73 @@ public class Main {
                 2,0,6,0,0,0,7,0,9,
                 3,4,0,0,0,0,0,6,5));
 
-        SudokuGrid sudoku = new SudokuGrid();
-        sudoku.importGrid(tenSolutions);
+        ArrayList<Integer> oneSolution16x16 = new ArrayList<Integer>(Arrays.asList(
+                2,0,3,7,0,5,9,6,0,8,0,0,14,13,15,16,
+                5,0,9,10,1,0,4,0,7,15,0,0,0,3,0,12,
+                4,16,0,0,0,11,13,0,2,5,12,3,1,0,7,0,
+                11,12,0,15,3,0,16,7,1,0,0,9,4,5,0,2,
+                0,0,1,2,0,0,0,0,0,0,0,12,15,0,16,13,
+                0,4,0,8,2,0,0,0,3,16,15,13,9,0,12,5,
+                14,0,5,0,0,0,0,3,0,0,9,7,0,1,8,10,
+                0,15,16,9,8,13,0,11,0,1,2,10,0,7,0,6,
+                1,3,0,11,9,0,0,16,0,0,4,5,0,8,0,15,
+                7,0,6,0,13,0,8,1,11,9,0,15,0,12,3,14,
+                8,0,14,0,0,3,0,5,0,2,6,0,10,4,9,11,
+                0,5,0,12,11,0,2,4,10,0,7,8,0,16,13,0,
+                0,7,0,1,4,6,0,0,9,12,0,14,16,0,0,8,
+                16,14,0,3,5,15,0,12,8,10,1,2,13,9,6,0,
+                15,0,2,0,0,9,0,0,0,7,0,6,12,0,1,4,
+                0,0,12,0,16,7,1,8,15,13,5,0,11,0,0,3));
+
+        SudokuGrid sudoku = new SudokuGrid(9);
+        sudoku.importGrid(mohit);
         System.out.println(sudoku);
-
-
-        long startTimeOriginal = System.nanoTime();
-        boolean resultOriginal = sudoku.checkIfMoreSolutions();     ///1.9 - check if more         ///2.9 - find all
-        long endTimeOriginal = System.nanoTime();
-        double timeOriginal = (endTimeOriginal - startTimeOriginal) / 1e7;
-
-
-        System.out.println("moresolutions method result: " + resultOriginal + ", Time taken: " + timeOriginal + " seconds");
-
-
-        //sudoku.findAllSolutions();
+        //sudoku.checkIfMoreSolutions();
+        sudoku.findAllSolutions(1);
         //sudoku.findOneSolution();
         ArrayList<ArrayList<Integer>> solutions = sudoku.getSolutions();
         System.out.println("There are that many solutions: " + solutions.size());
 
 
+//        SudokuGrid sudoku = new SudokuGrid(16);
+//        sudoku.importGrid(oneSolution16x16);
+//        System.out.println(sudoku);
+//        //sudoku.checkIfMoreSolutions();
+//        //sudoku.findAllSolutions(1);
+//        sudoku.findOneSolution();
+//        ArrayList<ArrayList<Integer>> solutions = sudoku.getSolutions();
+//        System.out.println("There are that many solutions: " + solutions.size());
 
-//        SudokuGrid sudoku = new SudokuGrid();
+
+
+//        SudokuGrid sudoku = new SudokuGrid(9);
 //        sudoku.generateRandomSudoku();
 //        System.out.println("\nPUZZLE:");
-//        sudoku.setPuzzleRecursive();    //3 is dangerous
+//        sudoku.setPuzzle(50);
+//
+//        System.out.println(sudoku);
+//
 //        System.out.println("\nSOLUTIONS:");
-//        sudoku.findAllSolutions();
+//        sudoku.findAllSolutions(1);
 //
 //        ArrayList<ArrayList<Integer>> solutions = sudoku.getSolutions();
 //        System.out.println("There are that many solutions: " + solutions.size());
 //        System.out.println(solutions.get(0));
 
 
+//        SudokuGrid sudoku = new SudokuGrid(16);
+//        sudoku.generateRandomSudoku();
+//        System.out.println(sudoku);
+//        System.out.println("\nPUZZLE:");
+//        sudoku.setPuzzle(100);
+//
+//        System.out.println(sudoku);
+//
+//        System.out.println("\nSOLUTIONS:");
+//        sudoku.findAllSolutions(1);
+//
+//        ArrayList<ArrayList<Integer>> solutions = sudoku.getSolutions();
+//        System.out.println("There are that many solutions: " + solutions.size());
+//        System.out.println(solutions.get(0));
     }
 }
