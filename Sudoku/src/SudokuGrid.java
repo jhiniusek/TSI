@@ -1,22 +1,14 @@
 import java.util.ArrayList;
 
 public class SudokuGrid {
-    private int size;
+    private final int size;
     private ArrayList<Cell> cells;
-    private ArrayList<Cell> puzzle = new ArrayList<Cell>();
-    private ArrayList<ArrayList<Integer>> solutions = new ArrayList<ArrayList<Integer>>();
+    private final ArrayList<Cell> puzzle = new ArrayList<Cell>();
+    private final ArrayList<ArrayList<Integer>> solutions = new ArrayList<ArrayList<Integer>>();
 
     public SudokuGrid(int size) {
         this.size = size;
         generateEmptyGrid();
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public void setCells(ArrayList<Cell> cells) {
-        this.cells = cells;
     }
 
     public int getSize() {
@@ -26,6 +18,15 @@ public class SudokuGrid {
     public ArrayList<ArrayList<Integer>> getSolutions() {
         return solutions;
     }
+
+    public ArrayList<Cell> getCells() {
+        return cells;
+    }
+
+    public ArrayList<Cell> getPuzzle() {
+        return puzzle;
+    }
+
 
     public Cell getCell(int row, int col){
         for(Cell cell : cells){
@@ -53,6 +54,10 @@ public class SudokuGrid {
             }
         }
         return myBox;
+    }
+
+    public void clearSolutions(){
+        solutions.clear();
     }
 
     public ArrayList<Integer> exportGrid(){
@@ -148,7 +153,7 @@ public class SudokuGrid {
             randomNums =  10 + (int)(Math.random() * ((25 - 10) + 1));
         }
         if(size==16){
-            randomNums =  60 + (int)(Math.random() * ((90 - 60) + 1));
+            randomNums =  20 + (int)(Math.random() * ((50 - 20) + 1));
         }
 
 
@@ -160,7 +165,7 @@ public class SudokuGrid {
                 getCell(row,col).setValue(value);
             }
         }
-        if(!findFirstSolution()){
+        if(!findFirstSolution(0)){
             generateEmptyGrid();
             generateRandomSudoku();
         }
@@ -175,19 +180,10 @@ public class SudokuGrid {
         return true;
     }
 
-    public int emptyCells(){
-        int counter = 0;
-        for(Cell cell : cells){
-            if(cell.getValue()==0){
-                counter++;
-            }
-        }
-        return counter;
-    }
-
-    public void setPuzzle(int cellsToHide){ //9x9 - 57 is kinda max
+    public void setPuzzle(int clues){
         int counter = 0;
         solutions.clear();
+        int cellsToHide = size*size - clues;
         while(puzzle.size()!=cellsToHide){
             int randomCell = (int) (Math.random() * (((size * size - 1)) + 1));
             if(!puzzle.contains(cells.get(randomCell))){
@@ -208,7 +204,7 @@ public class SudokuGrid {
                 puzzle.clear();
                 generateEmptyGrid();
                 generateRandomSudoku();
-                setPuzzle(cellsToHide);
+                setPuzzle(clues);
                 break;
             }
         }
@@ -242,7 +238,7 @@ public class SudokuGrid {
         return true;
     }
 
-    public boolean findFirstSolution(){
+    public boolean findFirstSolution(int mode){ // 1 - print output    2 - don't print output
         for (int i=1; i<= size; i++) {
             for (int j = 1; j <= size; j++) {
                 int currentValue = getCell(i,j).getValue();
@@ -250,28 +246,7 @@ public class SudokuGrid {
                     for(int brute = 1; brute <= size; brute++){
                         if(isSafe(i,j,brute)){
                             getCell(i,j).setValue(brute);
-                            if (findFirstSolution()) {
-                                return true;
-                            }
-                            getCell(i,j).setValue(0);
-                        }
-                    }
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public boolean findOneSolution(){
-        for (int i=1; i<= size; i++) {
-            for (int j = 1; j <= size; j++) {
-                int currentValue = getCell(i,j).getValue();
-                if(currentValue==0){
-                    for(int brute = 1; brute <= size; brute++){
-                        if(isSafe(i,j,brute)){
-                            getCell(i,j).setValue(brute);
-                            if (findOneSolution()) {
+                            if (findFirstSolution(mode)) {
                                 return true;
                             }
                             getCell(i,j).setValue(0);
@@ -282,7 +257,9 @@ public class SudokuGrid {
             }
         }
         solutions.add(exportGrid());
-        System.out.println(this);
+        if(mode==1) {
+            System.out.println(this);
+        }
         return true;
     }
 
@@ -337,15 +314,6 @@ public class SudokuGrid {
         }
         return true;
     }
-
-    public void multithreadSolve(int digit){
-        Cell cell = getFirstEmpty();
-        if(isSafe(cell.getRow(), cell.getCol(), digit)){
-            cell.setValue(digit);
-            findAllSolutions(1);
-        }
-    }
-
 
     @Override
     public String toString(){

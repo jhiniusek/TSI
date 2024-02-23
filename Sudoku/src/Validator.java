@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Validator {
-    private SudokuGrid sudoku;
+    private final SudokuGrid sudoku;
 
     public Validator(SudokuGrid sudoku) {
         this.sudoku = sudoku;

@@ -8,7 +8,15 @@ public class SolverThread implements Runnable{
         this.sudoku = sudoku;
     }
 
+    public void multithreadSolve(int digit){
+        Cell cell = sudoku.getFirstEmpty();
+        if(sudoku.isSafe(cell.getRow(), cell.getCol(), digit)){
+            cell.setValue(digit);
+            sudoku.findAllSolutions(1);
+        }
+    }
+
     public void run(){
-        sudoku.multithreadSolve(threadNumber);
+        multithreadSolve(threadNumber);
     }
 }

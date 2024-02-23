@@ -1,8 +1,18 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Multithreading {
+
+    public static Void createGrid(int size){
+        SudokuGrid sudoku = new SudokuGrid(size);
+        sudoku.generateRandomSudoku();
+        return null;
+    };
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ArrayList<Integer> invalidSudoku = new ArrayList<Integer>(Arrays.asList(
@@ -33,7 +43,7 @@ public class Multithreading {
 
 //        SudokuGrid sudoku = new SudokuGrid(9);
 //        sudoku.importGrid(invalidSudoku);
-
+//
 //        Validator check = new Validator(sudoku);
 //        List<Future<Boolean>> results;
 //
@@ -70,5 +80,36 @@ public class Multithreading {
 //            x.join();
 //        }
 
+
+        /// GENERATING MULTIPLE GRIDS ///
+
+//        final var tasks = new ArrayList<Callable<Void>>();
+//
+//        for(int i = 0; i<10; i++){
+//            tasks.add(() -> createGrid(9));
+//        }
+//
+//        try(var pool = Executors.newCachedThreadPool()){
+//            pool.invokeAll(tasks);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+
+        /// BITCOIN MINER ///
+
+        ArrayList<Thread> listOfThreads = new ArrayList<Thread>();
+        Canceller cancel = new Canceller();
+
+        for(int i = 1; i <= 4; i++){
+            SudokuGrid threadSudoku = new SudokuGrid(9);
+            threadSudoku.generateRandomSudoku();
+            var thread = new Thread(new PuzzelerThread(threadSudoku, 23, cancel));  //aroud 24 gets hard to generate
+            listOfThreads.add(thread);
+        }
+        for(Thread x : listOfThreads){
+            x.start();
+        }
     }
 }

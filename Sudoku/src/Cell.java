@@ -1,9 +1,8 @@
 public class Cell {
-
-    private int gridSize;
-    private int row;
-    private int col;
-    private int box;
+    private final int gridSize;
+    private final int row;
+    private final int col;
+    private final int box;
     private int value = 0;
 
     public Cell(int gridSize, int row, int col, int box) {
